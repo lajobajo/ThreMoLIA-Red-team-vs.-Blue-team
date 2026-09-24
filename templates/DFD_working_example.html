@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interactive DFD</title>
+
+    <style>
+        .dfd {
+            position: relative;
+            max-width: 1100px;
+            height: 650px;
+            margin: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* TRUST BOUNDARIES */
+
+        .trust-boundary {
+            position: absolute;
+            border: 2px dashed #777;
+            border-radius: 12px;
+            background: rgba(240, 240, 240, 0.35);
+        }
+
+        .trust-boundary span {
+            position: absolute;
+            top: -14px;
+            left: 20px;
+            background: white;
+            padding: 3px 10px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .internet {
+            left: 25px;
+            top: 80px;
+            width: 250px;
+            height: 450px;
+        }
+
+        .internal {
+            left: 340px;
+            top: 80px;
+            width: 720px;
+            height: 450px;
+        }
+
+        /* CLICKABLE NODES */
+
+        .node {
+            position: absolute;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 130px;
+            min-height: 65px;
+
+            padding: 12px;
+
+            background: white;
+            border: 2px solid #333;
+
+            color: #222;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+
+            z-index: 2;
+
+            transition:
+                background 0.15s,
+                border-color 0.15s,
+                transform 0.15s;
+        }
+
+        .node:hover {
+            background: #eef5ff;
+            border-color: #1769aa;
+            transform: scale(1.04);
+        }
+
+        .node:focus {
+            outline: 3px solid #8ab4f8;
+            outline-offset: 3px;
+        }
+
+        /* EXTERNAL ENTITY */
+
+        .entity {
+            border-radius: 5px;
+        }
+
+        /* PROCESS */
+
+        .process {
+            border-radius: 50%;
+            width: 150px;
+            height: 90px;
+        }
+
+        /* DATA STORE */
+
+        .datastore {
+            border-radius: 0;
+            border-left: 8px double #333;
+        }
+
+        /* POSITIONS */
+
+        .customer {
+            left: 75px;
+            top: 270px;
+        }
+
+        .firewall {
+            left: 365px;
+            top: 270px;
+        }
+
+        .api {
+            left: 540px;
+            top: 270px;
+        }
+
+        .database {
+            left: 830px;
+            top: 180px;
+        }
+
+        .payment {
+            left: 830px;
+            top: 360px;
+        }
+
+        /* ARROWS */
+
+        .arrow {
+            position: absolute;
+            height: 2px;
+            background: #333;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        .arrow::after {
+            content: "";
+
+            position: absolute;
+            right: -1px;
+            top: -5px;
+
+            width: 0;
+            height: 0;
+
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 10px solid #333;
+        }
+
+        .a1 {
+            left: 205px;
+            top: 302px;
+            width: 160px;
+        }
+
+        .a2 {
+            left: 495px;
+            top: 302px;
+            width: 45px;
+        }
+
+        .a3 {
+            left: 690px;
+            top: 295px;
+            width: 155px;
+            transform: rotate(-28deg);
+        }
+
+        .a4 {
+            left: 690px;
+            top: 335px;
+            width: 155px;
+            transform: rotate(25deg);
+        }
+
+        /* DATA LABELS */
+
+        .label {
+            position: absolute;
+            z-index: 3;
+
+            padding: 3px 7px;
+
+            background: white;
+
+            font-size: 12px;
+            color: #555;
+        }
+
+        .l1 {
+            left: 260px;
+            top: 282px;
+        }
+
+        .l2 {
+            left: 495px;
+            top: 280px;
+        }
+
+        .l3 {
+            left: 745px;
+            top: 235px;
+        }
+
+        .l4 {
+            left: 745px;
+            top: 350px;
+        }
+
+        /* INFORMATION SECTIONS */
+
+        .details {
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .details section {
+            padding: 25px;
+            margin-bottom: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .details h2 {
+            margin-top: 0;
+        }
+
+        .back {
+            color: #1769aa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Data Flow Diagram</h1>
+
+
+<div class="dfd">
+
+    <!-- TRUST BOUNDARY -->
+
+    <div class="trust-boundary internet">
+        <span>Trust Boundary: Internet</span>
+    </div>
+
+    <div class="trust-boundary internal">
+        <span>Trust Boundary: Internal Network</span>
+    </div>
+
+
+    <!-- CLICKABLE BOXES -->
+
+    <a href="#customer" class="node entity customer">
+        Customer
+    </a>
+
+
+    <a href="#firewall" class="node entity firewall">
+        Firewall
+    </a>
+
+
+    <a href="#api" class="node process api">
+        Order API
+    </a>
+
+
+    <a href="#database" class="node datastore database">
+        Order Database
+    </a>
+
+
+    <a href="#payment" class="node entity payment">
+        Payment Service
+    </a>
+
+
+    <!-- ARROWS -->
+
+    <div class="arrow a1"></div>
+
+    <div class="arrow a2"></div>
+
+    <div class="arrow a3"></div>
+
+    <div class="arrow a4"></div>
+
+
+    <!-- DATA LABELS -->
+
+    <div class="label l1">
+        HTTPS Request
+    </div>
+
+    <div class="label l2">
+        HTTP / HTTPS
+    </div>
+
+    <div class="label l3">
+        SQL / Data
+    </div>
+
+    <div class="label l4">
+        Payment Request
+    </div>
+
+</div>
+
+
+<!-- CLICK DESTINATIONS -->
+
+<div class="details">
+
+    <section id="customer">
+        <h2>Customer</h2>
+
+        <p>
+            External user interacting with the application.
+        </p>
+
+        <p>
+            <strong>Trust level:</strong> Untrusted
+        </p>
+
+        <a href="#" class="back">Back to diagram</a>
+    </section>
+
+
+    <section id="firewall">
+        <h2>Firewall</h2>
+
+        <p>
+            Controls network traffic between the external
+            network and the internal network.
+        </p>
+
+        <p>
+            <strong>Trust level:</strong> Security boundary
+        </p>
+
+        <a href="#" class="back">Back to diagram</a>
+    </section>
+
+
+    <section id="api">
+        <h2>Order API</h2>
+
+        <p>
+            Handles incoming order requests and communicates
+            with internal services and data stores.
+        </p>
+
+        <p>
+            <strong>Trust level:</strong> Internal
+        </p>
+
+        <a href="#" class="back">Back to diagram</a>
+    </section>
+
+
+    <section id="database">
+        <h2>Order Database</h2>
+
+        <p>
+            Stores customer orders and related application data.
+        </p>
+
+        <p>
+            <strong>Data:</strong> Orders, customer information
+        </p>
+
+        <a href="#" class="back">Back to diagram</a>
+    </section>
+
+
+    <section id="payment">
+        <h2>Payment Service</h2>
+
+        <p>
+            External service used to process payment requests.
+        </p>
+
+        <p>
+            <strong>Trust level:</strong> External service
+        </p>
+
+        <a href="#" class="back">Back to diagram</a>
+    </section>
+
+</div>
+
+</body>
+</html>
