@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ThreMoLIA - Game</title>
+
+
+    <style>
+
+        body {
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: #111827;
+
+            color: white;
+        }
+
+
+        .container {
+
+            width: 90%;
+
+            max-width: 900px;
+
+            text-align: center;
+        }
+
+
+        .round {
+
+            font-size: 24px;
+
+            color: #9ca3af;
+
+            margin-bottom: 30px;
+        }
+
+
+        .team {
+
+            padding: 60px 30px;
+
+            border-radius: 20px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .blue {
+
+            background: #1e3a8a;
+
+            border: 3px solid #3b82f6;
+        }
+
+
+        .red {
+
+            background: #7f1d1d;
+
+            border: 3px solid #ef4444;
+        }
+
+
+        h1 {
+
+            font-size: 56px;
+
+            margin: 0 0 20px 0;
+        }
+
+
+        p {
+
+            font-size: 24px;
+
+            margin: 0;
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        button {
+
+            padding: 16px 35px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #111827;
+
+            cursor: pointer;
+        }
+
+
+        button:hover {
+
+            background: #e5e7eb;
+        }
+
+
+        .dfd-button {
+
+            background: #f59e0b;
+
+            color: #111827;
+        }
+
+
+        .dfd-button:hover {
+
+            background: #d97706;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="round">
+
+        Round {{ round_number }}
+
+    </div>
+
+
+
+    {% if team == "blue" %}
+
+
+        <div class="team blue">
+
+            <h1>
+                🔵 BLUE TEAM
+            </h1>
+
+            <p>
+                Inspect the system and identify potential threats.
+            </p>
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="team red">
+
+            <h1>
+                🔴 RED TEAM
+            </h1>
+
+            <p>
+                Inspect the system and identify possible attack paths.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+
+    <div class="buttons">
+
+
+        <!-- Open DFD -->
+
+        <form
+            action="{{ url_for('dfd') }}"
+            method="GET"
+        >
+
+            <button
+                type="submit"
+                class="dfd-button"
+            >
+                Open DFD
+            </button>
+
+        </form>
+
+
+
+        <!-- End Turn -->
+
+        <form
+            action="{{ url_for('end_turn') }}"
+            method="POST"
+        >
+
+            <button type="submit">
+
+                End Turn
+
+            </button>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ThreMoLIA - Handover</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .handover {
+            padding: 60px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+
+            background: #1f2937;
+            border: 2px solid #4b5563;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 22px;
+            color: #d1d5db;
+        }
+
+        .blue {
+            color: #60a5fa;
+        }
+
+        .red {
+            color: #f87171;
+        }
+
+        button {
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+
+            border: none;
+            border-radius: 10px;
+
+            background: white;
+            color: #111827;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="handover">
+
+        <h1>Pass the device</h1>
+
+        {% if next_team == "red" %}
+
+            <h2 class="red">
+                🔴 RED TEAM
+            </h2>
+
+            <p>
+                Blue Team has finished their turn.
+            </p>
+
+            <p>
+                Pass the device to Red Team.
+            </p>
+
+        {% else %}
+
+            <h2 class="blue">
+                🔵 BLUE TEAM
+            </h2>
+
+            <p>
+                Red Team has finished their turn.
+            </p>
+
+            <p>
+                Pass the device to Blue Team.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <form action="{{ url_for('continue_game') }}" method="POST">
+        <button type="submit">
+            Continue
+        </button>
+    </form>
+
+</div>
+
+</body>
+</html>
