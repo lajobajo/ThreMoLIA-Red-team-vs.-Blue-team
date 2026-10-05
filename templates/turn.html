@@ -180,50 +180,179 @@
 
     </div>
 
-    <form
-        action="{{ url_for('blue_action') }}"
-        method="POST"
-        class="action-form"
-    >
 
-        <h2>Select a vulnerability</h2>
+  <div class="action-form">
 
-        <label>
+      <h2>Threat Modelling</h2>
+
+      <p>
+          Identify and classify potential threats in the system.
+      </p>
+
+      <form
+          action="{{ url_for('blue_threat_model') }}"
+          method="POST"
+      >
+
+          <table class="threat-table">
+        <thead>
+            <tr>
+                <th>Threat</th>
+                <th>Target</th>
+                <th>STRIDE</th>
+            </tr>
+        </thead>
+
+<tbody>
+
+    {% for threat in blue_threats %}
+
+    <tr>
+
+        <td>
+            {{ threat.threat }}
+        </td>
+
+        <td>
+            {{ threat.target }}
+        </td>
+
+        <td>
+            {{ threat.stride }}
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+
+    <tr>
+
+        <td>
             <input
-                type="radio"
-                name="vulnerability"
-                value="sql_injection"
-                {% if blue_action == "sql_injection" %}checked{% endif %}
+                type="text"
+                name="threat"
+                placeholder="Enter threat"
             >
-            SQL Injection
-        </label>
+        </td>
 
-        <br><br>
+        <td>
+            <input
+                type="text"
+                name="target"
+                placeholder="Enter target"
+            >
+        </td>
 
-        <button type="submit">
-            Confirm choice
-        </button>
+        <td>
+            <input
+                type="text"
+                name="stride"
+                placeholder="STRIDE category"
+            >
+        </td>
 
-    </form>
+    </tr>
 
-    {% else %}
+</tbody>
+    </table>
 
+    <br>
 
-        <div class="team red">
+    <button
+    type="submit"
+    name="action"
+    value="add"
+>
+    + Add threat
+</button>
+    <br><br>
 
-            <h1>
-                🔴 RED TEAM
-            </h1>
+<button
+    type="submit"
+    name="action"
+    value="lock"
+>
+    Lock Threat Model
+</button>
+</form>
+</div>
+{% else %}
 
-            <p>
-                Inspect the system and identify possible attack paths.
-            </p>
+    <div class="team red">
 
-        </div>
+        <h1>🔴 RED TEAM</h1>
 
+        <p>
+            Inspect the system and identify possible attack paths.
+        </p>
 
-    {% endif %}
+    </div>
 
+    <div class="action-form">
+
+        <h2>Red Team Actions</h2>
+
+        {% if not red_action %}
+
+            <form
+                action="{{ url_for('red_action') }}"
+                method="POST"
+            >
+
+                <h3>Select an attack</h3>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="attack"
+                        value="sql_injection"
+                        required
+                    >
+                    SQL Injection
+                </label>
+
+                <br><br>
+
+                <h3>Select a target</h3>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="target"
+                        value="order_api"
+                        required
+                    >
+                    Order API
+                </label>
+
+                <br><br>
+
+                <button type="submit">
+                    Confirm attack
+                </button>
+
+            </form>
+
+          {% else %}
+
+              <h3>Attack locked</h3>
+
+              <p>
+                  Attack:
+                  {{ red_action }}
+              </p>
+
+              <p>
+                  Target:
+                  {{ red_target }}
+              </p>
+
+          {% endif %}
+
+      </div>
+
+{% endif %}
 
 
     <div class="buttons">
@@ -272,3 +401,4 @@
 </body>
 
 </html>
+
