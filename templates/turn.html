@@ -166,21 +166,45 @@
 
 
 
-    {% if team == "blue" %}
+{% if team == "blue" %}
 
+    <div class="team blue">
 
-        <div class="team blue">
+        <h1>
+            🔵 BLUE TEAM
+        </h1>
 
-            <h1>
-                🔵 BLUE TEAM
-            </h1>
+        <p>
+            Inspect the system and identify potential threats.
+        </p>
 
-            <p>
-                Inspect the system and identify potential threats.
-            </p>
+    </div>
 
-        </div>
+    <form
+        action="{{ url_for('blue_action') }}"
+        method="POST"
+        class="action-form"
+    >
 
+        <h2>Select a vulnerability</h2>
+
+        <label>
+            <input
+                type="radio"
+                name="vulnerability"
+                value="sql_injection"
+                {% if blue_action == "sql_injection" %}checked{% endif %}
+            >
+            SQL Injection
+        </label>
+
+        <br><br>
+
+        <button type="submit">
+            Confirm choice
+        </button>
+
+    </form>
 
     {% else %}
 
