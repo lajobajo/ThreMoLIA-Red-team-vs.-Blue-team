@@ -12,106 +12,9 @@
 
     <title>ThreMoLIA - Result</title>
 
-    <style>
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background: #111827;
-            color: white;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .winner {
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin-bottom: 35px;
-        }
-
-        .winner.blue {
-            background: #1e3a8a;
-            border: 3px solid #3b82f6;
-        }
-
-        .winner.red {
-            background: #7f1d1d;
-            border: 3px solid #ef4444;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin: 0 0 15px 0;
-        }
-
-        p {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .panel {
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            background: #1f2937;
-            border: 2px solid #4b5563;
-            text-align: left;
-        }
-
-        .panel h2 {
-            margin-top: 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #4b5563;
-            text-align: left;
-        }
-
-        .ok {
-            color: #86efac;
-            font-weight: bold;
-        }
-
-        .fail {
-            color: #fca5a5;
-            font-weight: bold;
-        }
-
-        .muted {
-            color: #9ca3af;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 16px 35px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 10px;
-            background: white;
-            color: #111827;
-            text-decoration: none;
-        }
-
-        .button:hover {
-            background: #e5e7eb;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -216,7 +119,7 @@
         </p>
     </div>
 
-    <a href="{{ url_for('reset') }}" class="button">
+    <a href="{{ url_for('reset') }}" class="play_again_button">
         Play again
     </a>
 

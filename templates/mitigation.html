@@ -12,132 +12,9 @@
 
     <title>ThreMoLIA - Mitigation</title>
 
-    <style>
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background: #111827;
-            color: white;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .round {
-            font-size: 24px;
-            color: #9ca3af;
-            margin-bottom: 30px;
-        }
-
-        .team {
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin-bottom: 35px;
-            background: #1e3a8a;
-            border: 3px solid #3b82f6;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin: 0 0 20px 0;
-        }
-
-        p {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .panel {
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            background: #1f2937;
-            border: 2px solid #4b5563;
-            text-align: left;
-        }
-
-        .panel h2 {
-            margin-top: 0;
-        }
-
-        .threat-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .threat-table th,
-        .threat-table td {
-            padding: 10px;
-            border-bottom: 1px solid #4b5563;
-            text-align: left;
-        }
-
-        fieldset {
-            margin-bottom: 15px;
-            border: 1px solid #4b5563;
-            border-radius: 10px;
-        }
-
-        legend {
-            font-weight: bold;
-            padding: 0 8px;
-        }
-
-        .check {
-            display: inline-block;
-            margin: 5px 15px 5px 0;
-            font-size: 18px;
-        }
-
-        .error {
-            color: #fca5a5;
-            margin-bottom: 15px;
-        }
-
-        .muted {
-            color: #9ca3af;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 16px 35px;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            background: white;
-            color: #111827;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #e5e7eb;
-        }
-
-        .dfd-button {
-            background: #f59e0b;
-        }
-
-        .dfd-button:hover {
-            background: #d97706;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -149,7 +26,7 @@
         Round {{ round_number }}
     </div>
 
-    <div class="team">
+    <div class="team blue">
         <h1>🔵 BLUE TEAM</h1>
         <p>Choose mitigations to protect the system.</p>
     </div>
