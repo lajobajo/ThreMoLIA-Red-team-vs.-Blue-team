@@ -147,6 +147,26 @@
             background: #d97706;
         }
 
+        .pick-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            max-width: 450px;
+        }
+
+        .error {
+            color: #fca5a5;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
     </style>
 
 </head>
@@ -293,64 +313,68 @@
 
         <h2>Red Team Actions</h2>
 
-        {% if not red_action %}
+        {% if not red_locked %}
+
+            {% for message in get_flashed_messages() %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+
+            <p>
+                Pick {{ attacks_per_game }} attacks and a target for each.
+            </p>
+
+            <br>
 
             <form
                 action="{{ url_for('red_action') }}"
                 method="POST"
             >
 
-                <h3>Select an attack</h3>
+                {% for i in range(1, attacks_per_game + 1) %}
 
-                <label>
-                    <input
-                        type="radio"
-                        name="attack"
-                        value="sql_injection"
-                        required
-                    >
-                    SQL Injection
-                </label>
+                <div class="pick-row">
 
-                <br><br>
+                    <select name="attack_{{ i }}" required>
+                        <option value="">Select attack and target</option>
+                        {% for id, attack in attacks.items() %}
+                        <optgroup label="{{ attack.name }} ({{ attack.stride }})">
+                            {% for target in attack.targets %}
+                            <option value="{{ id }}|{{ target }}">
+                                {{ attack.name }} &rarr; {{ nodes[target] }}
+                            </option>
+                            {% endfor %}
+                        </optgroup>
+                        {% endfor %}
+                    </select>
 
-                <h3>Select a target</h3>
+                </div>
 
-                <label>
-                    <input
-                        type="radio"
-                        name="target"
-                        value="order_api"
-                        required
-                    >
-                    Order API
-                </label>
+                {% endfor %}
 
-                <br><br>
+                <br>
 
                 <button type="submit">
-                    Confirm attack
+                    Confirm attacks
                 </button>
 
             </form>
 
-          {% else %}
 
-              <h3>Attack locked</h3>
+        {% else %}
 
-              <p>
-                  Attack:
-                  {{ red_action }}
-              </p>
+            <h3>Attacks locked</h3>
 
-              <p>
-                  Target:
-                  {{ red_target }}
-              </p>
+            {% for pick in red_attacks %}
+            <p>
+                {{ attacks[pick.attack].name }}
+                &rarr;
+                {{ nodes[pick.target] }}
+            </p>
+            {% endfor %}
 
-          {% endif %}
+        {% endif %}
 
-      </div>
+    </div>
 
 {% endif %}
 
