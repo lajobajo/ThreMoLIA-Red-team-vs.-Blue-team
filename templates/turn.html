@@ -101,6 +101,7 @@
     type="submit"
     name="action"
     value="lock"
+    class="lock-button"
 >
     Lock Threat Model
 </button>
@@ -152,8 +153,8 @@
                 {% endfor %}
 
                 <br>
-                <button type="submit">
-                    Confirm attacks
+                <button type="submit" class="lock-button">
+                    Lock attacks
                 </button>
 
             </form>
@@ -186,15 +187,27 @@
         </form>
 
         <!-- End Turn -->
+        {% if team == "blue" %}
+            {% set turn_locked = blue_threat_model_locked %}
+        {% else %}
+            {% set turn_locked = red_locked %}
+        {% endif %}
         <form
             action="{{ url_for('end_turn') }}"
             method="POST"
         >
-            <button type="submit">
+            <button
+                type="submit"
+                class="end-turn-button"
+                {% if not turn_locked %}disabled{% endif %}
+            >
                 End Turn
             </button>
         </form>
     </div>
+    {% if not turn_locked %}
+    <p class="hint">Lock your choices before ending the turn.</p>
+    {% endif %}
 </div>
 
 <script>
