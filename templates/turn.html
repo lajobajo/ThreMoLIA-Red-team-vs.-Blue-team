@@ -8,13 +8,14 @@
         content="width=device-width, initial-scale=1.0"
     >
     <title>ThreMoLIA - Game</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 
-<body>
+<body class="side-{{ team }}">
 <div class="container">
     <div class="round">
         Round {{ round_number }}
@@ -22,19 +23,33 @@
 
 {% if team == "blue" %}
     <div class="team blue">
-        <h1>
-            🔵 BLUE TEAM
-        </h1>
-        <p>
-            Inspect the system and identify potential threats.
-        </p>
+        <h1>Blue team</h1>
+        <p>IT security, {{ hospital }}</p>
     </div>
 
   <div class="action-form">
-      <h2>Threat Modelling</h2>
-      <p>
-          Identify and classify potential threats in the system.
-      </p>
+      <h2>Threat modelling</h2>
+
+      <!-- Story for this step -->
+      <div class="story">
+          <p>
+              Somewhere out there, someone wants the patient records.
+              You don't know who they are yet, but they will look for a way in.
+          </p>
+          <p>
+              Open the DFD to see how data moves through the hospital.
+              The dashed lines are trust boundaries, where data passes into a more trusted area.
+              Attacks usually start there.
+          </p>
+          <p>
+              Think like an attacker: where would you break in, and what would you go after first?
+              Start with the parts that face the internet, then ask which loss would be worst.
+          </p>
+          <p>
+              For each threat, write what could happen, which part of the system it targets,
+              and its STRIDE category.
+          </p>
+      </div>
 
       <!-- Help for new players (US6) -->
       <div class="help">
@@ -195,7 +210,7 @@
     name="action"
     value="add"
 >
-    + Add threat
+    Add threat
 </button>
     <br><br>
 
@@ -205,25 +220,37 @@
     value="lock"
     class="lock-button"
 >
-    Lock Threat Model
+    Lock threat model
 </button>
 </form>
 </div>
 {% else %}
     <div class="team red">
-        <h1>🔴 RED TEAM</h1>
-        <p>
-            Inspect the system and identify possible attack paths.
-        </p>
+        <h1>Red team</h1>
+        <p>{{ attacker_group }}</p>
     </div>
     <div class="action-form">
-        <h2>Red Team Actions</h2>
+        <h2>Choose your attacks</h2>
+
+        <!-- Story for this step -->
+        <div class="story">
+            <p>
+                Your contact wants the patient records from {{ hospital }}.
+                The hospital is new, so its security is still weak,
+                but the IT team is already working on it.
+            </p>
+            <p>
+                Study the DFD and look for the weak spots.
+                The dashed lines are trust boundaries, where data enters from less trusted places.
+            </p>
+        </div>
         {% if not red_locked %}
             {% for message in get_flashed_messages() %}
                 <p class="error">{{ message }}</p>
             {% endfor %}
             <p>
-                Pick {{ attacks_per_game }} attacks and a target for each.
+                Choose a target, then choose how to attack it.
+                You have time for {{ attacks_per_game }} attacks before they notice you.
             </p>
             <br>
             <form
@@ -303,7 +330,7 @@
                 class="end-turn-button"
                 {% if not turn_locked %}disabled{% endif %}
             >
-                End Turn
+                End turn
             </button>
         </form>
     </div>

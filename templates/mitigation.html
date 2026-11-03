@@ -8,19 +8,20 @@
         content="width=device-width, initial-scale=1.0"
     >
     <title>ThreMoLIA - Mitigation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="side-blue">
 
 <div class="container">
     <div class="round">
         Round {{ round_number }}
     </div>
     <div class="team blue">
-        <h1>🔵 BLUE TEAM</h1>
-        <p>Choose mitigations to protect the system.</p>
+        <h1>Blue team</h1>
+        <p>IT security, {{ hospital }}</p>
     </div>
     <div class="panel">
         <h2>Your threat model</h2>
@@ -50,6 +51,15 @@
     <div class="panel">
         <h2>Mitigations</h2>
         {% if not blue_mitigations_locked %}
+
+        <!-- Story for this step -->
+        <div class="story">
+            <p>
+                The board has approved your threat model. Now spend your budget.
+                Each protection costs points, and you cannot protect everything.
+                Use your threat model to decide what matters most.
+            </p>
+        </div>
         {% for message in get_flashed_messages() %}
             <p class="error">{{ message }}</p>
         {% endfor %}
@@ -73,7 +83,6 @@
         </div>
 
         <p>Tick the mitigations you want to buy.</p>
-        <br>
         <form
             id="mitigation-form"
             action="{{ url_for('blue_mitigations') }}"
@@ -127,7 +136,7 @@
                 class="end-turn-button"
                 {% if not blue_mitigations_locked %}disabled{% endif %}
             >
-                End Turn
+                End turn
             </button>
         </form>
     </div>
@@ -159,7 +168,7 @@
                 ? `(${used - budget} over budget)`
                 : `(${budget - used} remaining)`;
             budgetWarning.textContent = overBudget
-                ? "Your are over budget!!"
+                ? "You are over budget."
                 : "";
             budgetDisplay.classList.toggle("over-budget", overBudget);
             // Keep the bar within range; the text above reports any overspend.
@@ -168,6 +177,7 @@
         };
 
         mitigationForm.addEventListener("change", updateBudget);
+        updateBudget();
     }
 </script>
 

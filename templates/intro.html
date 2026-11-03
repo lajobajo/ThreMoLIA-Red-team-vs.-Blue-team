@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreMoLIA - Intro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="side-neutral">
+<div class="container">
+
+    <!-- The story. Names come from game_data.py -->
+    <div class="intro-story">
+        <h1>{{ hospital }}</h1>
+
+        <p>
+            {{ hospital }} in {{ city }} has just opened. Patients can book
+            appointments online and ask an AI chatbot about their care.
+            Behind it all are the hospital's most valuable data: the patient records.
+        </p>
+
+        <p>
+            The hospital is new, and its security is not finished. Someone has noticed.
+        </p>
+    </div>
+
+    <div class="roles">
+        <div class="role blue">
+            <h2>Blue team</h2>
+            <p>
+                You are the hospital's IT security manager. You have worked here
+                for a month. Find out what could go wrong, then protect what
+                matters most with a budget of 10 points.
+            </p>
+        </div>
+
+        <div class="role red">
+            <h2>Red team</h2>
+            <p>
+                You are a hacker working for {{ attacker_group }}, a criminal group.
+                A contact on the dark web wants the patient records.
+                Get in before the hospital can protect itself.
+            </p>
+        </div>
+    </div>
+
+    <p class="intro-next">
+        Blue team plays first. Red team, look away from the screen.
+    </p>
+
+    <form action="{{ url_for('begin') }}" method="POST">
+        <button type="submit" class="lock-button">
+            Begin
+        </button>
+    </form>
+
+</div>
+</body>
+</html>

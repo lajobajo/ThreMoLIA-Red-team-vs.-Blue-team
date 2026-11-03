@@ -3,6 +3,11 @@
 Node ids match the section ids in templates/dfd.html.
 """
 
+# Story names. Change them here and they change everywhere in the game.
+HOSPITAL = "Placeholder hospital"
+CITY = "Placeholder city"
+ATTACKER_GROUP = "Placeholder attacker group"
+
 ATTACKS_PER_GAME = 3
 BLUE_WINS_IF_BLOCKED_AT_LEAST = 2
 

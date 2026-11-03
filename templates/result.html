@@ -8,16 +8,20 @@
         content="width=device-width, initial-scale=1.0"
     >
     <title>ThreMoLIA - Result</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body>
+<body class="side-{{ result.winner }}">
 <div class="container">
     {% if result.winner == "blue" %}
     <div class="winner blue">
-        <h1>🔵 BLUE TEAM WINS</h1>
+        <h1>Blue team wins</h1>
+        <p class="story-line">
+            The attacks were stopped. The patient records at {{ hospital }} are safe.
+        </p>
         <p>
             {{ result.blocked }} of {{ result.attacks|length }}
             attacks were blocked.
@@ -25,7 +29,10 @@
     </div>
     {% else %}
     <div class="winner red">
-        <h1>🔴 RED TEAM WINS</h1>
+        <h1>Red team wins</h1>
+        <p class="story-line">
+            {{ attacker_group }} got in. The patient records from {{ hospital }} are now for sale on the dark web.
+        </p>
         <p>
             {{ result.succeeded }} of {{ result.attacks|length }}
             attacks succeeded.
@@ -33,7 +40,7 @@
     </div>
     {% endif %}
     <div class="panel">
-        <h2>Red Team's attacks</h2>
+        <h2>Red team's attacks</h2>
         <table>
             <thead>
                 <tr>
@@ -69,7 +76,7 @@
     </div>
 
     <div class="panel">
-        <h2>Blue Team's mitigations</h2>
+        <h2>Blue team's mitigations</h2>
         <table>
             <thead>
                 <tr>

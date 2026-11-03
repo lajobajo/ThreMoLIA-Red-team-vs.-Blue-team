@@ -8,6 +8,16 @@ app = Flask(__name__)
 
 app.secret_key = "dev-secret-key"
 
+
+@app.context_processor
+def story_names():
+    # Makes the story names available in every template
+    return {
+        "hospital": game_data.HOSPITAL,
+        "city": game_data.CITY,
+        "attacker_group": game_data.ATTACKER_GROUP,
+    }
+
 @app.route("/")
 def home():
     if not session.get("game_started"):
@@ -17,6 +27,10 @@ def home():
     if "blue_mitigations" not in session or "red_attacks" not in session:
         session.clear()
         return render_template("start.html")
+
+    # Story intro shown once, before Blue's first turn
+    if session.get("phase") == "intro":
+        return render_template("intro.html")
 
     if session.get("phase") == "handover":
         return render_template(
@@ -75,7 +89,7 @@ def start():
     session["game_started"] = True
     session["current_team"] = "blue"
     session["round"] = 1
-    session["phase"] = "turn"
+    session["phase"] = "intro"
     session["blue_step"] = "threat_model"
 
 # Blue Team state
@@ -250,6 +264,17 @@ def continue_game():
         return redirect(url_for("home"))
 
     session["current_team"] = session["next_team"]
+    session["phase"] = "turn"
+
+    return redirect(url_for("home"))
+
+
+@app.route("/begin", methods=["POST"])
+def begin():
+    if not session.get("game_started"):
+        return redirect(url_for("home"))
+
+    # Leave the intro and start Blue's first turn
     session["phase"] = "turn"
 
     return redirect(url_for("home"))

@@ -1,349 +1,667 @@
+/*
+   ThreMoLIA theme.
+
+   The game happens inside a hospital's IT system, seen from two sides:
+   - Blue team (and the neutral pages) live in the hospital itself:
+     pale corridor walls, white chart paper, team signs with a coloured band.
+   - Red team works from the outside, at night: a dark room lit by red,
+     with a terminal font for headings and choices.
+
+   The <body> gets one of three classes: side-neutral, side-blue or side-red.
+   Every colour below is a variable, so side-red only has to swap them.
+*/
+
+:root {
+    --wall: #e6eeec;
+    --paper: #ffffff;
+    --tint: #eef3f2;
+    --ink: #1c2b2e;
+    --muted: #5b6e70;
+    --rule: #c3d1cf;
+
+    --blue: #1f5a8a;
+    --blue-tint: #e3edf5;
+    --red: #b42a22;
+    --red-tint: #f8e6e4;
+    --go: #2c7a4b;
+    --go-dark: #22613b;
+    --sign: #f2c230;
+    --sign-dark: #dcae1d;
+
+    --primary: var(--go);
+    --primary-dark: var(--go-dark);
+    --ok: var(--go);
+    --fail: var(--red);
+
+    --body-font: "Atkinson Hyperlegible", Verdana, sans-serif;
+    --head-font: var(--body-font);
+}
+
+/* Red team: the attacker's side, at night */
+body.side-red {
+    --wall: #1c1618;
+    --paper: #251d20;
+    --tint: #2e2427;
+    --ink: #f0e6e3;
+    --muted: #b3a2a0;
+    --rule: #45373b;
+
+    --red: #e5574b;
+    --red-tint: #3a2226;
+
+    --primary: #c8392f;
+    --primary-dark: #a92e26;
+    --ok: #7fd6a0;
+    --fail: #ff8a80;
+
+    --head-font: "IBM Plex Mono", "Courier New", monospace;
+}
+
+/* PAGE */
+
 body {
     margin: 0;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background: #111827;
-    color: white;
+    font-family: var(--body-font);
+    font-size: 17px;
+    line-height: 1.5;
+    background: var(--wall);
+    color: var(--ink);
 }
 
 .container {
     width: 90%;
-    max-width: 900px;
-    text-align: center;
-    padding: 30px 0;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 0 60px;
 }
 
-.round {
-    font-size: 24px;
-    color: #9ca3af;
-    margin-bottom: 30px;
-}
-
-.team {
-    padding: 60px 30px;
-    border-radius: 20px;
-    margin-bottom: 35px;
-}
-
-.blue {
-    background: #1e3a8a;
-    border: 3px solid #3b82f6;
-}
-
-.red {
-    background: #7f1d1d;
-    border: 3px solid #ef4444;
+h1,
+h2,
+h3 {
+    font-family: var(--head-font);
 }
 
 h1 {
-    font-size: 56px;
-    margin: 0 0 20px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+}
+
+h2 {
+    font-size: 22px;
+    margin: 0 0 12px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 0 0 8px;
 }
 
 p {
-    font-size: 24px;
-    color: #d1d5db;
-    margin-bottom: 40px;
+    margin: 0 0 14px;
 }
 
-.buttons {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
+.round {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 10px;
 }
 
-button {
-    padding: 16px 35px;
+/* TEAM SIGNS (like ward signage: a plate with a coloured band) */
+
+.team,
+.winner,
+.handover {
+    position: relative;
+    padding: 22px 26px 20px 40px;
+    margin-bottom: 24px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+}
+
+.team::before,
+.winner::before,
+.handover::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 14px;
+    border-radius: 6px 0 0 6px;
+    background: var(--muted);
+}
+
+.team.blue::before,
+.winner.blue::before,
+.handover.blue::before {
+    background: var(--blue);
+}
+
+.team.red::before,
+.winner.red::before,
+.handover.red::before {
+    background: var(--red);
+}
+
+.team p,
+.winner p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.team.blue h1,
+.winner.blue h1,
+.handover.blue h2 {
+    color: var(--blue);
+}
+
+.team.red h1,
+.winner.red h1,
+.handover.red h2 {
+    color: var(--red);
+}
+
+.handover {
+    padding-top: 36px;
+    padding-bottom: 30px;
+}
+
+.handover h1 {
+    font-family: var(--body-font);
     font-size: 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    background: white;
-    color: #111827;
-    cursor: pointer;
+    font-weight: normal;
+    color: var(--muted);
 }
 
-button:hover {
-    background: #e5e7eb;
+.handover h2 {
+    font-size: 40px;
+    margin: 0 0 16px;
 }
 
-.dfd-button {
-    background: #f59e0b;
-    color: #111827;
+/* A sentence of the story, on the handover and result pages */
+.story-line {
+    font-size: 20px;
+    color: var(--ink);
 }
 
-.dfd-button:hover {
-    background: #d97706;
+.winner .story-line {
+    margin: 8px 0 6px;
+    color: var(--ink);
 }
 
-.lock-button {
-    background: #16a34a;
-    color: white;
+/* START PAGE */
+
+.start {
+    max-width: 560px;
+    padding-top: 18vh;
 }
 
-.lock-button:hover {
-    background: #15803d;
+.start h1 {
+    font-size: 56px;
+    letter-spacing: -0.5px;
 }
 
-.end-turn-button {
-    background: #6366f1;
-    color: white;
+.start p {
+    font-size: 20px;
+    color: var(--muted);
+    margin-bottom: 28px;
 }
 
-.end-turn-button:hover {
-    background: #4f46e5;
+/* INTRO PAGE */
+
+.intro-story {
+    max-width: 680px;
+    margin-bottom: 30px;
 }
 
-button:disabled,
-button:disabled:hover {
-    background: #4b5563;
-    color: #9ca3af;
-    cursor: not-allowed;
+.intro-story h1 {
+    font-size: 46px;
+    margin-bottom: 18px;
 }
 
-.hint {
+.intro-story p {
+    font-size: 20px;
+}
+
+.roles {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 26px;
+}
+
+.role {
+    flex: 1;
+    padding: 22px 24px;
+    border-radius: 6px;
+}
+
+.role p {
+    margin: 0;
+}
+
+/* Blue's role looks like a hospital sign */
+.role.blue {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 14px solid var(--blue);
+}
+
+.role.blue h2 {
+    color: var(--blue);
+}
+
+/* Red's role is a preview of the dark attacker side */
+.role.red {
+    background: #251d20;
+    border: 1px solid #45373b;
+    border-left: 14px solid #e5574b;
+    color: #f0e6e3;
+}
+
+.role.red h2 {
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    color: #e5574b;
+}
+
+.intro-next {
+    color: var(--muted);
+}
+
+/* CHART PAPER */
+
+.panel,
+.action-form {
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+}
+
+.action-form > p,
+.panel > p {
+    color: var(--muted);
+}
+
+/* STORY BRIEFING at the top of each step */
+
+.story {
+    margin: 0 0 22px;
+    padding: 16px 20px;
+    background: var(--blue-tint);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+}
+
+.story p {
+    margin: 0 0 10px;
+}
+
+.story p:last-child {
+    margin-bottom: 0;
+}
+
+body.side-red .story {
+    background: var(--red-tint);
+    border-left-color: var(--red);
+}
+
+/* TABLES */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    font-size: 15px;
+    color: var(--muted);
+    background: var(--tint);
+}
+
+.threat-table td {
+    padding: 8px 12px;
+}
+
+/* FORM FIELDS */
+
+input[type="text"],
+select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    font: inherit;
     font-size: 16px;
-    color: #9ca3af;
-    margin: 10px 0 0;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+}
+
+body.side-red select {
+    font-family: var(--head-font);
+    font-size: 15px;
+    background: var(--wall);
+}
+
+select:disabled {
+    opacity: 0.55;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: 2px solid var(--blue);
+    outline-offset: 1px;
+}
+
+body.side-red select:focus {
+    outline-color: var(--red);
 }
 
 .pick-row {
     display: flex;
     gap: 10px;
-    justify-content: center;
-    margin-bottom: 12px;
-}
-
-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 8px;
-    max-width: 450px;
-}
-
-.error {
-    color: #fca5a5;
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.winner {
-    padding: 40px 30px;
-    border-radius: 20px;
-    margin-bottom: 35px;
-}
-
-.winner.blue {
-    background: #1e3a8a;
-    border: 3px solid #3b82f6;
-}
-
-.winner.red {
-    background: #7f1d1d;
-    border: 3px solid #ef4444;
-}
-
-.panel {
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 15px;
-    background: #1f2937;
-    border: 2px solid #4b5563;
-    text-align: left;
-}
-
-.panel h2 {
-    margin-top: 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #4b5563;
-    text-align: left;
-}
-
-.ok {
-    color: #86efac;
-    font-weight: bold;
-}
-
-.fail {
-    color: #fca5a5;
-    font-weight: bold;
-}
-
-.muted {
-    color: #9ca3af;
-}
-
-.play_again_button {
-    padding: 16px 35px;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    background: White;
-    color: #111827;
-    text-decoration: none;
-}
-
-.threat-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.threat-table th,
-.threat-table td {
-    padding: 10px;
-    border-bottom: 1px solid #4b5563;
-    text-align: left;
+    margin-bottom: 10px;
 }
 
 fieldset {
-    margin-bottom: 15px;
-    border: 1px solid #4b5563;
-    border-radius: 10px;
+    margin: 0 0 14px;
+    padding: 10px 16px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
 }
 
 legend {
     font-weight: bold;
-    padding: 0 8px;
+    padding: 0 6px;
 }
 
 .check {
     display: inline-block;
-    margin: 5px 15px 5px 0;
-    font-size: 18px;
+    margin: 4px 18px 4px 0;
 }
 
+.check input {
+    accent-color: var(--blue);
+    margin-right: 4px;
+}
+
+/* BUTTONS */
+
+.buttons {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+button,
+.play_again_button {
+    display: inline-block;
+    padding: 12px 24px;
+    font: inherit;
+    font-size: 17px;
+    font-weight: bold;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.play_again_button:hover {
+    background: var(--tint);
+}
+
+button:focus-visible,
+.play_again_button:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+}
+
+/* Lock / confirm: green in the hospital, red for the attacker */
+.lock-button {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.lock-button:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* End turn = hand the device over */
+.end-turn-button {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--wall);
+}
+
+.end-turn-button:hover {
+    background: var(--muted);
+    border-color: var(--muted);
+}
+
+/* Open DFD = yellow wayfinding sign */
+.dfd-button {
+    background: var(--sign);
+    border-color: var(--sign);
+    color: #1c2b2e;
+}
+
+.dfd-button:hover {
+    background: var(--sign-dark);
+    border-color: var(--sign-dark);
+}
+
+button:disabled,
+button:disabled:hover {
+    background: transparent;
+    border-color: var(--rule);
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+.hint {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 10px 0 0;
+}
+
+/* MESSAGES AND RESULTS */
+
+.error {
+    padding: 10px 14px;
+    color: var(--red);
+    background: var(--red-tint);
+    border-left: 4px solid var(--red);
+    border-radius: 4px;
+}
+
+.ok {
+    color: var(--ok);
+    font-weight: bold;
+}
+
+.fail {
+    color: var(--fail);
+    font-weight: bold;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+/* BUDGET (Blue's mitigation page) */
+
 .budget-display {
-    margin: 20px 0;
+    margin: 4px 0 20px;
+    padding: 14px 16px;
+    background: var(--blue-tint);
+    border-radius: 6px;
 }
 
 .budget-summary {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 0 0 10px;
-    font-size: 18px;
+    margin: 0 0 8px;
+    color: var(--ink);
+}
+
+#budget-remaining {
+    margin-left: 6px;
+    color: var(--muted);
 }
 
 .budget-track {
-    height: 12px;
+    height: 10px;
     overflow: hidden;
-    border-radius: 6px;
-    background: #374151;
+    border-radius: 5px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
 }
 
 .budget-fill {
     width: 0;
     height: 100%;
-    border-radius: inherit;
-    background: #34d399;
+    background: var(--go);
     transition: width 160ms ease, background-color 160ms ease;
 }
 
+.budget-display.over-budget {
+    background: var(--red-tint);
+}
+
 .budget-display.over-budget .budget-fill {
-    background: #f87171;
+    background: var(--red);
 }
 
 .budget-warning {
-    min-height: 0;
     margin: 8px 0 0;
-    color: #fca5a5;
-    font-size: 16px;
+    color: var(--red);
+    font-weight: bold;
 }
 
 .budget-warning:empty {
     display: none;
 }
 
-.handover {
-    padding: 60px 30px;
-    border-radius: 20px;
-    margin-bottom: 40px;
-
-    background: #1f2937;
-    border: 2px solid #4b5563;
-}
-/* Help for new players on the threat modelling page (US6) */
+/* HELP FOR NEW PLAYERS (Blue's threat modelling page) */
 
 .help {
-    margin: 0 0 30px;
-    text-align: left;
+    margin: 0 0 24px;
 }
 
 .help-box {
-    margin-bottom: 12px;
-    padding: 16px 22px;
-    background: #1f2937;
-    border: 2px solid #3b82f6;
-    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 14px 18px;
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
 }
 
 .help-box summary {
-    font-size: 19px;
     font-weight: bold;
+    color: var(--blue);
     cursor: pointer;
 }
 
 .help-box p {
-    font-size: 17px;
-    margin: 14px 0 0;
+    margin: 12px 0 0;
 }
 
 .help-box dl {
-    margin: 10px 0 0;
+    margin: 6px 0 0;
 }
 
 .help-box dt {
-    margin-top: 14px;
-    font-size: 18px;
+    margin-top: 12px;
     font-weight: bold;
-    color: #93c5fd;
+    color: var(--blue);
 }
 
 .help-box dd {
-    margin: 4px 0 0;
-    font-size: 17px;
-    line-height: 1.5;
-    color: #d1d5db;
+    margin: 2px 0 0;
 }
 
 .stride-table {
-    margin-top: 14px;
+    margin-top: 12px;
     font-size: 16px;
 }
 
 .stride-table th {
-    color: #9ca3af;
-}
-
-.stride-table td {
-    color: #d1d5db;
-    vertical-align: top;
+    background: var(--paper);
 }
 
 .stride-table td:first-child {
     white-space: nowrap;
-    color: white;
 }
 
 .stride-table b {
-    color: #93c5fd;
+    color: var(--blue);
 }
 
-/* On small screens, show each STRIDE category as a stacked block */
+/* MOTION AND SMALL SCREENS */
+
+@media (prefers-reduced-motion: reduce) {
+    .budget-fill {
+        transition: none;
+    }
+}
+
 @media (max-width: 700px) {
+    .container {
+        padding-top: 24px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .start h1 {
+        font-size: 42px;
+    }
+
+    .intro-story h1 {
+        font-size: 34px;
+    }
+
+    .roles,
+    .pick-row {
+        flex-direction: column;
+    }
+
+    /* Keep each target + attack pair visibly together */
+    .pick-row {
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+
+    .panel,
+    .action-form {
+        padding: 18px;
+    }
+
+    .team,
+    .winner,
+    .handover {
+        padding-right: 18px;
+        padding-left: 32px;
+    }
+
     .stride-table thead {
         display: none;
     }
@@ -360,6 +678,6 @@ legend {
 
     .stride-table tr {
         padding: 10px 0;
-        border-bottom: 1px solid #4b5563;
+        border-bottom: 1px solid var(--rule);
     }
 }
