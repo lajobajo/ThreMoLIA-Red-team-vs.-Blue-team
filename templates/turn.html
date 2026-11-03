@@ -35,6 +35,108 @@
       <p>
           Identify and classify potential threats in the system.
       </p>
+
+      <!-- Help for new players (US6) -->
+      <div class="help">
+
+          <details class="help-box">
+              <summary>What is a threat? (and how is it different from a vulnerability)</summary>
+
+              <p>
+                  Think of the hospital system as a house.
+              </p>
+
+              <dl>
+                  <dt>Threat</dt>
+                  <dd>
+                      Someone who wants to cause harm, and what they want to do.
+                      A thief who wants to steal your things is a threat.
+                      A threat needs a threat actor: a person or group with a reason to attack.
+                  </dd>
+
+                  <dt>Vulnerability</dt>
+                  <dd>
+                      A weakness that lets the threat succeed.
+                      An unlocked door or an open window is a vulnerability.
+                      A vulnerability on its own does no harm. It becomes a problem when a threat uses it.
+                  </dd>
+
+                  <dt>Asset</dt>
+                  <dd>
+                      Something valuable that needs protecting, like the things inside the house.
+                      In the hospital, the patient records in the databases are the most important assets.
+                  </dd>
+
+                  <dt>Trust boundary</dt>
+                  <dd>
+                      The line where data moves between areas that trust each other differently,
+                      like the front door between the street and your home.
+                      Trust boundaries are where attacks usually happen.
+                      You can see them as dashed boxes in the DFD.
+                  </dd>
+              </dl>
+          </details>
+
+          <details class="help-box">
+              <summary>What does STRIDE mean?</summary>
+
+              <p>
+                  STRIDE is a checklist of six kinds of threats.
+                  Pick the one that best describes what the attacker wants to do,
+                  and write its name in the STRIDE column.
+              </p>
+
+              <table class="stride-table">
+                  <thead>
+                      <tr>
+                          <th>Category</th>
+                          <th>What it means</th>
+                          <th>Example in the hospital</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><b>S</b>poofing</td>
+                          <td>Pretending to be someone else.</td>
+                          <td>An attacker logs in as a doctor with a stolen password.</td>
+                      </tr>
+                      <tr>
+                          <td><b>T</b>ampering</td>
+                          <td>Changing data that you should not be able to change.</td>
+                          <td>Someone changes a patient's medication in the records.</td>
+                      </tr>
+                      <tr>
+                          <td><b>R</b>epudiation</td>
+                          <td>Doing something and denying it, because nothing proves who did it.</td>
+                          <td>A booking is deleted and the logs cannot show who did it.</td>
+                      </tr>
+                      <tr>
+                          <td><b>I</b>nformation disclosure</td>
+                          <td>Seeing data that you should not be able to see.</td>
+                          <td>Patient records leak to people outside the hospital.</td>
+                      </tr>
+                      <tr>
+                          <td><b>D</b>enial of service</td>
+                          <td>Making the system stop working for everyone else.</td>
+                          <td>The booking site is flooded so patients cannot book.</td>
+                      </tr>
+                      <tr>
+                          <td><b>E</b>levation of privilege</td>
+                          <td>Getting more access than you should have.</td>
+                          <td>A normal user gets admin rights in the backend.</td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <p>
+                  <b>Example row for your table:</b>
+                  Threat "An attacker steals patient records",
+                  target "Clinical Database",
+                  STRIDE "Information disclosure".
+              </p>
+          </details>
+
+      </div>
       <form
           action="{{ url_for('blue_threat_model') }}"
           method="POST"
@@ -81,7 +183,7 @@
             <input
                 type="text"
                 name="stride"
-                placeholder="STRIDE category"
+                placeholder="e.g. Tampering"
             >
         </td>
     </tr>

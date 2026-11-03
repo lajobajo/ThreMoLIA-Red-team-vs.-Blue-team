@@ -275,3 +275,91 @@ legend {
     background: #1f2937;
     border: 2px solid #4b5563;
 }
+/* Help for new players on the threat modelling page (US6) */
+
+.help {
+    margin: 0 0 30px;
+    text-align: left;
+}
+
+.help-box {
+    margin-bottom: 12px;
+    padding: 16px 22px;
+    background: #1f2937;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+}
+
+.help-box summary {
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.help-box p {
+    font-size: 17px;
+    margin: 14px 0 0;
+}
+
+.help-box dl {
+    margin: 10px 0 0;
+}
+
+.help-box dt {
+    margin-top: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #93c5fd;
+}
+
+.help-box dd {
+    margin: 4px 0 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #d1d5db;
+}
+
+.stride-table {
+    margin-top: 14px;
+    font-size: 16px;
+}
+
+.stride-table th {
+    color: #9ca3af;
+}
+
+.stride-table td {
+    color: #d1d5db;
+    vertical-align: top;
+}
+
+.stride-table td:first-child {
+    white-space: nowrap;
+    color: white;
+}
+
+.stride-table b {
+    color: #93c5fd;
+}
+
+/* On small screens, show each STRIDE category as a stacked block */
+@media (max-width: 700px) {
+    .stride-table thead {
+        display: none;
+    }
+
+    .stride-table tr,
+    .stride-table td {
+        display: block;
+    }
+
+    .stride-table td {
+        border-bottom: none;
+        padding: 2px 0;
+    }
+
+    .stride-table tr {
+        padding: 10px 0;
+        border-bottom: 1px solid #4b5563;
+    }
+}
