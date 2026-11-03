@@ -129,16 +129,23 @@
             >
                 {% for i in range(1, attacks_per_game + 1) %}
                 <div class="pick-row">
-                    <select name="attack_{{ i }}" required>
-                        <option value="">Select attack and target</option>
+                    <select name="target_{{ i }}" class="target-select" required>
+                        <option value="">Select target</option>
+                        {% for target in attacks_by_target %}
+                        <option value="{{ target }}">
+                            {{ nodes[target] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <select name="attack_{{ i }}" class="attack-select" required disabled>
+                        <option value="">Select attack</option>
                         {% for id, attack in attacks.items() %}
-                        <optgroup label="{{ attack.name }} ({{ attack.stride }})">
-                            {% for target in attack.targets %}
-                            <option value="{{ id }}|{{ target }}">
-                                {{ attack.name }} &rarr; {{ nodes[target] }}
-                            </option>
-                            {% endfor %}
-                        </optgroup>
+                        <option
+                            value="{{ id }}"
+                            data-targets="{{ attack.targets | join(' ') }}"
+                        >
+                            {{ attack.name }} ({{ attack.stride }})
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -189,5 +196,30 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Only offer the attacks that can be aimed at the chosen target.
+    document.querySelectorAll(".pick-row").forEach((row) => {
+        const targetSelect = row.querySelector(".target-select");
+        const attackSelect = row.querySelector(".attack-select");
+
+        if (!targetSelect || !attackSelect) {
+            return;
+        }
+
+        targetSelect.addEventListener("change", () => {
+            const target = targetSelect.value;
+
+            attackSelect.value = "";
+            attackSelect.disabled = !target;
+            attackSelect.querySelectorAll("option[data-targets]").forEach((option) => {
+                const matches = option.dataset.targets.split(" ").includes(target);
+                option.hidden = !matches;
+                option.disabled = !matches;
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

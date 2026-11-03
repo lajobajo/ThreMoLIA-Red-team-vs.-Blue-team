@@ -69,6 +69,14 @@ ATTACKS = {
     },
 }
 
+# Node id -> attack ids that can be aimed at it, in NODES order. Nodes no
+# attack can target are left out.
+ATTACKS_BY_TARGET = {
+    node: [id for id, attack in ATTACKS.items() if node in attack["targets"]]
+    for node in NODES
+    if any(node in attack["targets"] for attack in ATTACKS.values())
+}
+
 # Mitigations Blue can buy. "blocks" are attack ids the mitigation stops and
 # "targets" are the nodes it can be placed on. The more attacks a mitigation
 # blocks, the more it costs.

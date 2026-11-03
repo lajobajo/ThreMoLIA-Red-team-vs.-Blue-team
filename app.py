@@ -64,6 +64,7 @@ def home():
         red_attacks=session.get("red_attacks", []),
         red_locked=session.get("red_locked", False),
         attacks=game_data.ATTACKS,
+        attacks_by_target=game_data.ATTACKS_BY_TARGET,
         nodes=game_data.NODES,
         attacks_per_game=game_data.ATTACKS_PER_GAME
     )
@@ -161,8 +162,10 @@ def red_action():
 
     picks = []
     for i in range(1, game_data.ATTACKS_PER_GAME + 1):
-        attack, _, target = request.form.get(f"attack_{i}", "").partition("|")
-        picks.append({"attack": attack, "target": target})
+        picks.append({
+            "attack": request.form.get(f"attack_{i}", ""),
+            "target": request.form.get(f"target_{i}", "")
+        })
 
     error = game_data.validate_red_attacks(picks)
 
