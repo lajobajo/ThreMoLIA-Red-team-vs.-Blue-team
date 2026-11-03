@@ -99,7 +99,7 @@
             </fieldset>
             {% endfor %}
             <br>
-            <button type="submit">
+            <button type="submit" class="lock-button">
                 Lock mitigations
             </button>
         </form>
@@ -122,11 +122,18 @@
             </button>
         </form>
         <form action="{{ url_for('end_turn') }}" method="POST">
-            <button type="submit">
+            <button
+                type="submit"
+                class="end-turn-button"
+                {% if not blue_mitigations_locked %}disabled{% endif %}
+            >
                 End Turn
             </button>
         </form>
     </div>
+    {% if not blue_mitigations_locked %}
+    <p class="hint">Lock your mitigations before ending the turn.</p>
+    {% endif %}
 </div>
 
 <script>

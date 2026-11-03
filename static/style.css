@@ -50,6 +50,7 @@ p {
 }
 
 .buttons {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -78,6 +79,37 @@ button:hover {
 
 .dfd-button:hover {
     background: #d97706;
+}
+
+.lock-button {
+    background: #16a34a;
+    color: white;
+}
+
+.lock-button:hover {
+    background: #15803d;
+}
+
+.end-turn-button {
+    background: #6366f1;
+    color: white;
+}
+
+.end-turn-button:hover {
+    background: #4f46e5;
+}
+
+button:disabled,
+button:disabled:hover {
+    background: #4b5563;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.hint {
+    font-size: 16px;
+    color: #9ca3af;
+    margin: 10px 0 0;
 }
 
 .pick-row {
