@@ -3,57 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ThreMoLIA - Handover</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-
 <div class="container">
-
     <div class="handover">
-
         <h1>Pass the device</h1>
-
         {% if next_team == "red" %}
-
             <h2 class="red">
                 🔴 RED TEAM
             </h2>
-
             <p>
                 Blue Team has finished their turn.
             </p>
-
             <p>
                 Pass the device to Red Team.
             </p>
-
         {% else %}
-
             <h2 class="blue">
                 🔵 BLUE TEAM
             </h2>
-
             <p>
                 Red Team has finished their turn.
             </p>
-
             <p>
                 Pass the device to Blue Team.
             </p>
-
         {% endif %}
-
     </div>
-
     <form action="{{ url_for('continue_game') }}" method="POST">
         <button type="submit">
             Continue
         </button>
     </form>
-
 </div>
 
 </body>

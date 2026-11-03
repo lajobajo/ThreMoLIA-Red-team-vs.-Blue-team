@@ -2,66 +2,43 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>ThreMoLIA - Game</title>
-
-
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 
 <body>
-
-
 <div class="container">
-
-
     <div class="round">
-
         Round {{ round_number }}
-
     </div>
 
-
-
 {% if team == "blue" %}
-
     <div class="team blue">
-
         <h1>
             🔵 BLUE TEAM
         </h1>
-
         <p>
             Inspect the system and identify potential threats.
         </p>
-
     </div>
 
-
   <div class="action-form">
-
       <h2>Threat Modelling</h2>
-
       <p>
           Identify and classify potential threats in the system.
       </p>
-
       <form
           action="{{ url_for('blue_threat_model') }}"
           method="POST"
       >
-
           <table class="threat-table">
         <thead>
             <tr>
@@ -70,32 +47,22 @@
                 <th>STRIDE</th>
             </tr>
         </thead>
-
 <tbody>
-
     {% for threat in blue_threats %}
-
     <tr>
-
         <td>
             {{ threat.threat }}
         </td>
-
         <td>
             {{ threat.target }}
         </td>
-
         <td>
             {{ threat.stride }}
         </td>
-
     </tr>
-
     {% endfor %}
 
-
     <tr>
-
         <td>
             <input
                 type="text"
@@ -103,7 +70,6 @@
                 placeholder="Enter threat"
             >
         </td>
-
         <td>
             <input
                 type="text"
@@ -111,7 +77,6 @@
                 placeholder="Enter target"
             >
         </td>
-
         <td>
             <input
                 type="text"
@@ -119,14 +84,10 @@
                 placeholder="STRIDE category"
             >
         </td>
-
     </tr>
-
 </tbody>
     </table>
-
     <br>
-
     <button
     type="submit"
     name="action"
@@ -146,42 +107,28 @@
 </form>
 </div>
 {% else %}
-
     <div class="team red">
-
         <h1>🔴 RED TEAM</h1>
-
         <p>
             Inspect the system and identify possible attack paths.
         </p>
-
     </div>
-
     <div class="action-form">
-
         <h2>Red Team Actions</h2>
-
         {% if not red_locked %}
-
             {% for message in get_flashed_messages() %}
                 <p class="error">{{ message }}</p>
             {% endfor %}
-
             <p>
                 Pick {{ attacks_per_game }} attacks and a target for each.
             </p>
-
             <br>
-
             <form
                 action="{{ url_for('red_action') }}"
                 method="POST"
             >
-
                 {% for i in range(1, attacks_per_game + 1) %}
-
                 <div class="pick-row">
-
                     <select name="attack_{{ i }}" required>
                         <option value="">Select attack and target</option>
                         {% for id, attack in attacks.items() %}
@@ -194,24 +141,18 @@
                         </optgroup>
                         {% endfor %}
                     </select>
-
                 </div>
-
                 {% endfor %}
 
                 <br>
-
                 <button type="submit">
                     Confirm attacks
                 </button>
 
             </form>
 
-
         {% else %}
-
             <h3>Attacks locked</h3>
-
             {% for pick in red_attacks %}
             <p>
                 {{ attacks[pick.attack].name }}
@@ -219,58 +160,34 @@
                 {{ nodes[pick.target] }}
             </p>
             {% endfor %}
-
         {% endif %}
-
     </div>
-
 {% endif %}
 
-
     <div class="buttons">
-
-
         <!-- Open DFD -->
-
         <form
             action="{{ url_for('dfd') }}"
             method="GET"
         >
-
             <button
                 type="submit"
                 class="dfd-button"
             >
                 Open DFD
             </button>
-
         </form>
 
-
-
         <!-- End Turn -->
-
         <form
             action="{{ url_for('end_turn') }}"
             method="POST"
         >
-
             <button type="submit">
-
                 End Turn
-
             </button>
-
         </form>
-
-
     </div>
-
-
 </div>
-
-
 </body>
-
 </html>
-

@@ -193,6 +193,48 @@ legend {
     font-size: 18px;
 }
 
+.budget-display {
+    margin: 20px 0;
+}
+
+.budget-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.budget-track {
+    height: 12px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #374151;
+}
+
+.budget-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #34d399;
+    transition: width 160ms ease, background-color 160ms ease;
+}
+
+.budget-display.over-budget .budget-fill {
+    background: #f87171;
+}
+
+.budget-warning {
+    min-height: 0;
+    margin: 8px 0 0;
+    color: #fca5a5;
+    font-size: 16px;
+}
+
+.budget-warning:empty {
+    display: none;
+}
+
 .handover {
     padding: 60px 30px;
     border-radius: 20px;

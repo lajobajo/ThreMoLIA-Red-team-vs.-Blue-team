@@ -2,28 +2,20 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>ThreMoLIA - Result</title>
-
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
-
 <div class="container">
-
     {% if result.winner == "blue" %}
-
     <div class="winner blue">
         <h1>🔵 BLUE TEAM WINS</h1>
         <p>
@@ -31,9 +23,7 @@
             attacks were blocked.
         </p>
     </div>
-
     {% else %}
-
     <div class="winner red">
         <h1>🔴 RED TEAM WINS</h1>
         <p>
@@ -41,12 +31,9 @@
             attacks succeeded.
         </p>
     </div>
-
     {% endif %}
-
     <div class="panel">
         <h2>Red Team's attacks</h2>
-
         <table>
             <thead>
                 <tr>
@@ -83,7 +70,6 @@
 
     <div class="panel">
         <h2>Blue Team's mitigations</h2>
-
         <table>
             <thead>
                 <tr>
@@ -122,8 +108,7 @@
     <a href="{{ url_for('reset') }}" class="play_again_button">
         Play again
     </a>
-
 </div>
-
 </body>
+
 </html>

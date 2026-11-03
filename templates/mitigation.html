@@ -2,40 +2,29 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>ThreMoLIA - Mitigation</title>
-
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}">
-
 </head>
-
 <body>
 
 <div class="container">
-
     <div class="round">
         Round {{ round_number }}
     </div>
-
     <div class="team blue">
         <h1>🔵 BLUE TEAM</h1>
         <p>Choose mitigations to protect the system.</p>
     </div>
-
     <div class="panel">
         <h2>Your threat model</h2>
-
         {% if blue_threats %}
-
         <table class="threat-table">
             <thead>
                 <tr>
@@ -54,35 +43,42 @@
                 {% endfor %}
             </tbody>
         </table>
-
         {% else %}
-
         <p class="muted">No threats were recorded.</p>
-
         {% endif %}
     </div>
-
     <div class="panel">
         <h2>Mitigations</h2>
-
         {% if not blue_mitigations_locked %}
-
         {% for message in get_flashed_messages() %}
             <p class="error">{{ message }}</p>
         {% endfor %}
 
-        <p>
-            Budget: <strong>{{ blue_budget }}</strong>
-            &mdash; tick the mitigations you want to buy.
-        </p>
+        <div class="budget-display" id="budget-display" data-budget="{{ blue_budget }}">
+            <p class="budget-summary" aria-live="polite">
+                Budget used: <strong><span id="budget-used">0</span> / {{ blue_budget }}</strong>
+                <span id="budget-remaining">({{ blue_budget }} remaining)</span>
+            </p>
+            <div
+                class="budget-track"
+                role="progressbar"
+                aria-label="Mitigation budget used"
+                aria-valuemin="0"
+                aria-valuemax="{{ blue_budget }}"
+                aria-valuenow="0"
+            >
+                <div class="budget-fill"></div>
+            </div>
+            <p class="budget-warning" id="budget-warning" role="status"></p>
+        </div>
 
+        <p>Tick the mitigations you want to buy.</p>
         <br>
-
         <form
+            id="mitigation-form"
             action="{{ url_for('blue_mitigations') }}"
             method="POST"
         >
-
             {% for id, mitigation in mitigations.items() %}
             <fieldset>
                 <legend>
@@ -95,25 +91,20 @@
                         type="checkbox"
                         name="pick"
                         value="{{ id }}|{{ node }}"
+                        data-cost="{{ mitigation.cost }}"
                     >
                     {{ nodes[node] }}
                 </label>
                 {% endfor %}
             </fieldset>
             {% endfor %}
-
             <br>
-
             <button type="submit">
                 Lock mitigations
             </button>
-
         </form>
-
         {% else %}
-
         <h3>Mitigations locked</h3>
-
         {% for pick in blue_mitigations %}
         <p>
             {{ mitigations[pick.mitigation].name }}
@@ -121,27 +112,57 @@
             {{ nodes[pick.node] }}
         </p>
         {% endfor %}
-
         {% endif %}
     </div>
 
     <div class="buttons">
-
         <form action="{{ url_for('dfd') }}" method="GET">
             <button type="submit" class="dfd-button">
                 Open DFD
             </button>
         </form>
-
         <form action="{{ url_for('end_turn') }}" method="POST">
             <button type="submit">
                 End Turn
             </button>
         </form>
-
     </div>
-
 </div>
+
+<script>
+    const mitigationForm = document.querySelector("#mitigation-form");
+    const budgetDisplay = document.querySelector("#budget-display");
+
+    if (mitigationForm && budgetDisplay) {
+        const budget = Number(budgetDisplay.dataset.budget);
+        const budgetTrack = budgetDisplay.querySelector(".budget-track");
+        const budgetFill = budgetDisplay.querySelector(".budget-fill");
+        const budgetUsed = document.querySelector("#budget-used");
+        const budgetRemaining = document.querySelector("#budget-remaining");
+        const budgetWarning = document.querySelector("#budget-warning");
+
+        const updateBudget = () => {
+            // Each checked placement contributes its mitigation's cost.
+            const used = [...mitigationForm.querySelectorAll("input[name='pick']:checked")]
+                .reduce((total, input) => total + Number(input.dataset.cost), 0);
+            const overBudget = used > budget;
+
+            budgetUsed.textContent = used;
+            budgetRemaining.textContent = overBudget
+                ? `(${used - budget} over budget)`
+                : `(${budget - used} remaining)`;
+            budgetWarning.textContent = overBudget
+                ? "Your are over budget!!"
+                : "";
+            budgetDisplay.classList.toggle("over-budget", overBudget);
+            // Keep the bar within range; the text above reports any overspend.
+            budgetTrack.setAttribute("aria-valuenow", Math.min(used, budget));
+            budgetFill.style.width = `${Math.min((used / budget) * 100, 100)}%`;
+        };
+
+        mitigationForm.addEventListener("change", updateBudget);
+    }
+</script>
 
 </body>
 </html>
