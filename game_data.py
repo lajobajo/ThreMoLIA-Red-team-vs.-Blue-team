@@ -16,10 +16,8 @@ NODES = {
     "patient": "Patient",
     "web": "Web Frontend",
     "chatbot": "AI Chatbot",
-    "ai-database": "AI Database",
     "backend": "Backend API",
     "bookings": "Bookings Database",
-    "clinical": "Clinical Database",
     "analysis": "AI Analysis",
     "staff-doctor": "Doctor (staff)",
     "management": "Management Staff",
@@ -30,7 +28,7 @@ ATTACKS = {
     "sql_injection": {
         "name": "SQL Injection",
         "stride": "Tampering",
-        "targets": ["backend", "bookings", "clinical", "ai-database"],
+        "targets": ["backend", "bookings", "clinical"],
     },
     "xss": {
         "name": "Cross-Site Scripting (XSS)",
@@ -91,7 +89,7 @@ MITIGATIONS = {
         "cost": 4,
         "blocks": ["sql_injection", "xss", "prompt_injection"],
         "targets": [
-            "backend", "bookings", "clinical", "ai-database", "web", "chatbot",
+            "backend", "bookings", "web", "chatbot",
         ],
     },
     "rate_limiting": {
@@ -104,7 +102,7 @@ MITIGATIONS = {
         "name": "RBAC / Least Privilege",
         "cost": 3,
         "blocks": ["privilege_escalation", "data_exfiltration"],
-        "targets": ["backend", "bookings", "clinical", "ai-database", "analysis"],
+        "targets": ["backend", "bookings", "analysis"],
     },
     "mfa": {
         "name": "Multi-Factor Authentication",
@@ -116,7 +114,7 @@ MITIGATIONS = {
         "name": "Encryption at Rest",
         "cost": 2,
         "blocks": ["data_exfiltration"],
-        "targets": ["bookings", "clinical", "ai-database"],
+        "targets": ["bookings"]
     },
     "prompt_guardrails": {
         "name": "Prompt Guardrails",
@@ -128,13 +126,13 @@ MITIGATIONS = {
         "name": "Training Data Integrity Checks",
         "cost": 2,
         "blocks": ["model_poisoning"],
-        "targets": ["analysis", "ai-database"],
+        "targets": ["analysis"]
     },
     "audit_logging": {
         "name": "Tamper-Proof Audit Logging",
         "cost": 1,
         "blocks": ["log_tampering"],
-        "targets": ["backend", "clinical"],
+        "targets": ["backend"],
     },
 }
 
