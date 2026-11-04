@@ -408,7 +408,8 @@ legend {
 }
 
 button,
-.play_again_button {
+.play_again_button,
+.dfd-button {
     display: inline-block;
     padding: 12px 24px;
     font: inherit;
@@ -423,12 +424,14 @@ button,
 }
 
 button:hover,
-.play_again_button:hover {
+.play_again_button:hover,
+.dfd-button:hover {
     background: var(--tint);
 }
 
 button:focus-visible,
-.play_again_button:focus-visible {
+.play_again_button:focus-visible,
+.dfd-button:focus-visible {
     outline: 3px solid var(--blue);
     outline-offset: 2px;
 }

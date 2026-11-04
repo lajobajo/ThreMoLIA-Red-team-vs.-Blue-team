@@ -113,7 +113,8 @@ def dfd():
     return render_template(
         "dfd.html",
         team=session["current_team"],
-        round_number=session["round"]
+        round_number=session["round"],
+        game_nodes=game_data.NODES,
     )
 
 @app.route("/blue-threat-model", methods=["POST"])

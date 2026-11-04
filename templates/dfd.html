@@ -5,331 +5,298 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThreMoLIA - DFD</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dfd.css') }}">
-    <link rel="stylesheet" href="../static/dfd.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=2) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dfd.css', v=10) }}">
 </head>
-<body>
+<body class="side-{{ team }}">
 
-<header class="header">
-    <div class="round">
-        Round {{ round_number }}
+<div class="container dfd-page">
+    <div class="round">Round {{ round_number }}</div>
+    <div class="team {{ team }}">
+        <h1>{{ "Blue team" if team == "blue" else "Red team" }}</h1>
+        <p>Data flow diagram, {{ hospital }}</p>
     </div>
-    {% if team == "blue" %}
-        <div class="team blue">
-            🔵 BLUE TEAM
-        </div>
-    {% else %}
-        <div class="team red">
-            🔴 RED TEAM
-        </div>
-    {% endif %}
-</header>
 
-<div class="page">
-    <h1 class="title">
-        Data Flow Diagram
-    </h1>
+    <div class="dfd-intro">
+        <h1>Data Flow Diagram</h1>
+        <p>Select any node to jump to its component details below. The selected component will be highlighted.</p>
+    </div>
 
-    <div class="dfd">
-        <!-- TRUST BOUNDARIES -->
-        <div class="trust-boundary internet">
-            <span>External / Public trust boundary</span>
+    <div class="panel dfd-panel">
+    <div class="diagram-toolbar">
+        <div>
+            <h2>Appointment reminder system</h2>
+            <p>System overview · Select a component for details</p>
         </div>
+        <ul class="diagram-legend" aria-label="Diagram legend">
+            <li><span class="legend-symbol legend-entity"></span>External entity</li>
+            <li><span class="legend-symbol legend-process"></span>Process</li>
+            <li><span class="legend-symbol legend-store"></span>Data store</li>
+            <li><span class="legend-symbol legend-boundary"></span>Trust boundary</li>
+        </ul>
+    </div>
+    <div class="dfd-scroll">
+    <div class="dfd" id="diagram" role="group" aria-label="Appointment reminder data flow diagram">
+        <div class="diagram-content">
+        <svg class="diagram-lines" viewBox="0 0 960 710" aria-hidden="true">
+            <defs>
+                <pattern id="boundary-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+                    <rect width="10" height="10" fill="#f3f7f8"></rect>
+                    <path d="M 0 0 V 10" stroke="#a9c5d6" stroke-width="3"></path>
+                </pattern>
+                <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                    <path d="M 0 0 L 8 4 L 0 8 z" fill="#f3f4f6"></path>
+                </marker>
+            </defs>
 
-        <div class="trust-boundary internal">
-            <span>Hospital Internal Network trust boundary</span>
-        </div>
+            <text class="boundary-title" x="248" y="12">Appointment reminder</text>
 
-        <div class="trust-boundary healthcare">
-            <span>Healthcare staff trust boundary</span>
-        </div>
+            <rect class="trust-area" x="47" y="57" width="331" height="291" rx="40"></rect>
+            <text class="boundary-title" x="64" y="82">External / Public trust boundary</text>
+            <rect class="trust-area" x="417" y="57" width="341" height="412" rx="40"></rect>
+            <text class="boundary-title" x="480" y="82">Hospital Internal Network trust boundary</text>
+            <rect class="trust-area" x="778" y="61" width="180" height="142" rx="20"></rect>
+            <text class="boundary-title" x="793" y="85">Third party API</text>
+            <rect class="trust-area" x="47" y="388" width="331" height="320" rx="40"></rect>
+            <text class="boundary-title" x="72" y="413">AI Chatbot</text>
+            <rect class="trust-area" x="417" y="505" width="341" height="203" rx="32"></rect>
+            <text class="boundary-title" x="505" y="666">Healthcare staff trust boundary</text>
 
-        <!-- CLICKABLE BOXES -->
-        <a href="#doctor" class="node entity doctor">Doctor</a>
+            <path class="reminder-flow" d="M 877 117 V 24 H 15 V 237 H 87"></path>
+
+            <g class="flow">
+                <path d="M 436 133 H 267" marker-end="url(#arrowhead)"></path>
+                <path d="M 518 145 H 548 V 198" marker-end="url(#arrowhead)"></path>
+                <path d="M 208 237 H 285" marker-end="url(#arrowhead)"></path>
+                <path d="M 285 229 H 208" marker-end="url(#arrowhead)"></path>
+                <path d="M 368 218 H 507" marker-end="url(#arrowhead)"></path>
+                <path d="M 507 251 H 368" marker-end="url(#arrowhead)"></path>
+                <path d="M 589 215 H 615 V 147 H 654" marker-end="url(#arrowhead)"></path>
+                <path d="M 727 143 H 817" marker-end="url(#arrowhead)"></path>
+                <path d="M 589 258 H 625 V 304 H 661" marker-end="url(#arrowhead)"></path>
+                <path d="M 656 339 H 635 V 407 H 528" marker-end="url(#arrowhead)"></path>
+                <path d="M 548 277 V 330 H 500 V 342" marker-end="url(#arrowhead)"></path>
+                <path d="M 486 444 V 536" marker-end="url(#arrowhead)"></path>
+                <path d="M 528 570 H 607" marker-end="url(#arrowhead)"></path>
+                <path d="M 607 586 H 528" marker-end="url(#arrowhead)"></path>
+                <path d="M 151 268 V 376 H 195 V 428" marker-end="url(#arrowhead)"></path>
+                <path d="M 185 508 V 588" marker-end="url(#arrowhead)"></path>
+                <path d="M 239 588 V 508" marker-end="url(#arrowhead)"></path>
+                <path d="M 253 468 H 410 V 436 H 439" marker-end="url(#arrowhead)"></path>
+            </g>
+
+            <g class="flow-label" transform="translate(330 122)">
+                <rect width="43" height="18"></rect><text x="5" y="13">OIDC</text>
+            </g>
+            <g class="flow-label" transform="translate(450 174)">
+                <rect width="90" height="18"></rect><text x="5" y="13">Validate token</text>
+            </g>
+            <g class="flow-label" transform="translate(232 222)">
+                <rect width="46" height="18"></rect><text x="5" y="13">HTTPS</text>
+            </g>
+            <g class="flow-label" transform="translate(400 197)">
+                <rect width="105" height="18"></rect><text x="5" y="13">Create bookings</text>
+            </g>
+            <g class="flow-label" transform="translate(394 257)">
+                <rect width="79" height="18"></rect><text x="5" y="13">View bookings</text>
+            </g>
+            <g class="flow-label" transform="translate(578 180)">
+                <rect width="77" height="18"></rect><text x="5" y="13">Send notice</text>
+            </g>
+            <g class="flow-label" transform="translate(736 110)">
+                <rect width="82" height="18"></rect><text x="5" y="13">SMTP / SMS</text>
+            </g>
+            <g class="flow-label" transform="translate(592 278)">
+                <rect width="66" height="18"></rect><text x="5" y="13">Log events</text>
+            </g>
+            <g class="flow-label" transform="translate(565 343)">
+                <rect width="66" height="18"></rect><text x="5" y="13">Log events</text>
+            </g>
+            <g class="flow-label" transform="translate(478 307)">
+                <rect width="65" height="18"></rect><text x="5" y="13">Store data</text>
+            </g>
+            <g class="flow-label" transform="translate(464 484)">
+                <rect width="38" height="18"></rect><text x="5" y="13">SQL</text>
+            </g>
+            <g class="flow-label" transform="translate(548 563)">
+                <rect width="48" height="18"></rect><text x="5" y="13">HTTPS</text>
+            </g>
+            <g class="flow-label" transform="translate(155 337)">
+                <rect width="48" height="18"></rect><text x="5" y="13">HTTPS</text>
+            </g>
+            <g class="flow-label" transform="translate(161 544)">
+                <rect width="50" height="18"></rect><text x="5" y="13">Prompt</text>
+            </g>
+            <g class="flow-label" transform="translate(214 544)">
+                <rect width="58" height="18"></rect><text x="5" y="13">Response</text>
+            </g>
+            <g class="flow-label" transform="translate(337 401)">
+                <rect width="38" height="18"></rect><text x="5" y="13">SQL</text>
+            </g>
+            <g class="flow-label" transform="translate(305 443)">
+                <rect width="86" height="18"></rect><text x="5" y="13">Booking data</text>
+            </g>
+        </svg>
+
+        <a href="#eid-provider" class="node entity eid-provider">eID Provider<br>(BankID)</a>
         <a href="#patient" class="node entity patient">Patient</a>
-
-        <a href="#web" class="node process web_framework">Web<br>Frontend</a>
-        <a href="#chatbot" class="node process chatbot">AI<br>Chatbot<br>(AI Agent)</a>
-        <a href="#ai-database" class="node datastore ai_database">AI<br>Database</a>
-
-        <a href="#backend" class="node process backend">Backend<br>API</a>
-        <a href="#bookings" class="node datastore bookings">Bookings<br>Database</a>
-        <a href="#clinical" class="node datastore clinical">Clinical<br>Database</a>
-        <a href="#analysis" class="node process analysis">AI Analysis</a>
-
-        <a href="#staff-doctor" class="node entity staff_doctor">Doctor</a>
-        <a href="#management" class="node entity management">Management<br>Staff</a>
-
-        <!-- ARROWS -->
-        <div class="arrow doctor_web"></div>
-        <div class="arrow patient_web"></div>
-        <div class="arrow patient_chatbot"></div>
-
-        <div class="arrow web_backend"></div>
-
-        <div class="arrow backend_bookings"></div>
-        <div class="arrow backend_clinical"></div>
-
-        <div class="arrow chatbot_database"></div>
-
-        <div class="arrow clinical_analysis"></div>
-
-        <div class="arrow bookings_staff"></div>
-        <div class="arrow clinical_management"></div>
-
-        <div class="arrow analysis_staff1"></div>
-        <div class="arrow analysis_staff2"></div>
-        <div class="arrow analysis_staff3"></div>
-
-        <!-- DATA LABELS -->
-        <div class="label doctor_web_label">HTTPS</div>
-        <div class="label patient_web_label">HTTPS</div>
-        <div class="label patient_chatbot_label">HTTPS</div>
-
-        <div class="label booking_label">Create / update booking</div>
-
-        <div class="label sql_bookings">SQL</div>
-        <div class="label sql_clinical">SQL</div>
-        <div class="label chatbot_sql">SQL</div>
-
-        <div class="label records_doctor">View records</div>
-        <div class="label records_management">View records</div>
-
-        <div class="label ai_label">Information</div>
-        <div class="label alerts_label">Alerts / recommendations</div>
-
+        <a href="#web" class="node process public-frontend">Web<br>Frontend</a>
+        <a href="#auth-service" class="node process auth-service">Auth<br>Service<br>(SSO)</a>
+        <a href="#backend" class="node process backend-api">Backend<br>API</a>
+        <a href="#notification-service" class="node process notification-service">Notification<br>Service</a>
+        <a href="#audit-log" class="node process audit-log">Audit Log<br>Service</a>
+        <a href="#bookings" class="node datastore main-database"><span>Bookings<br>Database</span></a>
+        <a href="#email-gateway" class="node entity email-gateway">Email / SMS<br>Gateway</a>
+        <a href="#chatbot" class="node process ai-chatbot">AI<br>Chatbot</a>
+        <a href="#llm-service" class="node process llm-service">LLM<br>Service<br>(API)</a>
+        <a href="#staff-frontend" class="node process staff-frontend">Web<br>Frontend</a>
+        <a href="#management" class="node entity staff">Management<br>Staff</a>
+        <span class="reminder-arrowhead" aria-hidden="true"></span>
+        </div>
+    </div>
+    </div>
     </div>
 
-    <div class="controls">
+    <div class="buttons">
         <a
             href="{{ url_for('home') }}"
-            class="back-button"
+            class="dfd-button"
         >
-            ← Back to {{ "Blue" if team == "blue" else "Red" }} Team
+            ← Back to game
         </a>
     </div>
 
-    <div class="details">
-        <section id="doctor">
-            <h2>
-                Doctor
-            </h2>
-
-            <p>
-                External healthcare professional interacting with the hospital
-                application to create or update bookings and access relevant records.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                External / Public
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+    <div class="dfd-detail-heading">
+        <h2>Component details</h2>
+        <p>Select a component in the diagram to jump to its description, data, and trust level.</p>
+    </div>
+    <nav class="game-targets" aria-label="Game target nodes">
+        <h3>Game target nodes</h3>
+        <ul>
+            {% for node_id, node_name in game_nodes.items() %}
+            <li><a href="#{{ node_id }}">{{ node_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="dfd-details">
+        <section class="panel dfd-detail" id="patient" tabindex="-1">
+            <h2>Patient</h2>
+            <p>External user who manages appointments and communicates with the AI assistant.</p>
+            <p><strong>Trust level:</strong> External / Public</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="patient">
-            <h2>
-                Patient
-            </h2>
-
-            <p>
-                External user who interacts with the application to manage
-                appointments and communicate with the AI assistant.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                External / Public
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="doctor" tabindex="-1">
+            <h2>Doctor (external)</h2>
+            <p>External doctor identity that can interact with the public-facing hospital services.</p>
+            <p><strong>Trust level:</strong> External / Public</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="web">
-            <h2>
-                Web Frontend
-            </h2>
-
-            <p>
-                Public-facing web interface that allows doctors and patients
-                to interact with the hospital application.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                External / Public
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="eid-provider" tabindex="-1">
+            <h2>eID Provider (BankID)</h2>
+            <p>External identity provider used to authenticate patients and return identity assertions using OIDC.</p>
+            <p><strong>Trust level:</strong> External / Public</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="chatbot">
-            <h2>
-                AI Chatbot
-            </h2>
-
-            <p>
-                AI-powered assistant that interacts with patients and processes
-                their requests using information stored in the AI database.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                External / Public
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="web" tabindex="-1">
+            <h2>Web Frontend</h2>
+            <p>Public-facing interface used by patients to view and create bookings over HTTPS.</p>
+            <p><strong>Trust level:</strong> External / Public</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="ai-database">
-            <h2>
-                AI Database
-            </h2>
-
-            <p>
-                Stores information used by the AI chatbot to support conversations
-                and provide relevant responses to patients.
-            </p>
-
-            <p>
-                <strong>Data:</strong>
-                AI-related data, conversation data
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="auth-service" tabindex="-1">
+            <h2>Auth Service (SSO)</h2>
+            <p>Validates identity tokens from the eID provider and supplies authenticated requests to the backend.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="backend">
-            <h2>
-                Backend API
-            </h2>
-
-            <p>
-                Internal application service that handles booking requests and
-                communicates with the hospital's internal databases.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                Internal hospital network
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="backend" tabindex="-1">
+            <h2>Backend API</h2>
+            <p>Handles booking requests, stores application data, sends appointment notices, and records audit events.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="bookings">
-            <h2>
-                Bookings Database
-            </h2>
-
-            <p>
-                Stores information related to appointments and bookings managed
-                by the hospital application.
-            </p>
-
-            <p>
-                <strong>Data:</strong>
-                Appointments, bookings, scheduling information
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="notification-service" tabindex="-1">
+            <h2>Notification Service</h2>
+            <p>Sends appointment reminders to the external email and SMS gateway.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="clinical">
-            <h2>
-                Clinical Database
-            </h2>
-
-            <p>
-                Stores clinical information and medical records used by authorised
-                healthcare staff and the AI analysis service.
-            </p>
-
-            <p>
-                <strong>Data:</strong>
-                Clinical records, medical information
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="audit-log" tabindex="-1">
+            <h2>Audit Log Service</h2>
+            <p>Collects application events and writes them to the main database.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="analysis">
-            <h2>
-                AI Analysis
-            </h2>
-
-            <p>
-                Internal AI service that analyses clinical information and produces
-                labels, alerts, and recommendations for healthcare staff.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                Internal hospital network
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="bookings" tabindex="-1">
+            <h2>Bookings Database</h2>
+            <p>Stores patient booking records and appointment changes. The backend writes booking data here, and staff use it to review relevant appointments.</p>
+            <h3>Information stored</h3>
+            <ul>
+                <li>Patient and appointment references</li>
+                <li>Booking and scheduling changes</li>
+            </ul>
+            <p><strong>Why it matters:</strong> Unauthorised access or changes could expose booking information or disrupt appointments.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="staff-doctor">
-            <h2>
-                Doctor
-            </h2>
-
-            <p>
-                Healthcare staff member who accesses clinical records from the
-                hospital's internal systems.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                Healthcare staff
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="ai-database" tabindex="-1">
+            <h2>AI Database</h2>
+            <p>Stores information used by the AI features, such as indexed clinical content or model-related data.</p>
+            <p><strong>Why it matters:</strong> Data access or tampering could affect the confidentiality and reliability of AI responses.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
-        <section id="management">
-            <h2>
-                Management Staff
-            </h2>
-
-            <p>
-                Authorised hospital management personnel who access relevant
-                records and receive alerts and recommendations from the AI analysis.
-            </p>
-
-            <p>
-                <strong>Trust level:</strong>
-                Healthcare staff
-            </p>
-
-            <a href="#" class="back">
-                Back to diagram
-            </a>
+        <section class="panel dfd-detail" id="clinical" tabindex="-1">
+            <h2>Clinical Database</h2>
+            <p>Stores clinical information accessed by authorised hospital services.</p>
+            <p><strong>Why it matters:</strong> Clinical records are sensitive and require strong access controls and integrity protections.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
         </section>
-
+        <section class="panel dfd-detail" id="email-gateway" tabindex="-1">
+            <h2>Email / SMS Gateway</h2>
+            <p>Third-party API that delivers email and SMS appointment reminders.</p>
+            <p><strong>Trust level:</strong> Third party</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="chatbot" tabindex="-1">
+            <h2>AI Chatbot</h2>
+            <p>Patient-facing AI agent that exchanges prompts and responses with the LLM service.</p>
+            <p><strong>Trust level:</strong> External-facing service</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="analysis" tabindex="-1">
+            <h2>AI Analysis</h2>
+            <p>Analyses input and relevant data to produce AI-assisted results for hospital workflows.</p>
+            <p><strong>Why it matters:</strong> Manipulated inputs or outputs could undermine the accuracy of AI-assisted decisions.</p>
+            <p><strong>Trust level:</strong> Internal hospital network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="llm-service" tabindex="-1">
+            <h2>LLM Service (API)</h2>
+            <p>External language-model API used by the chatbot to generate responses.</p>
+            <p><strong>Trust level:</strong> Third-party service</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="staff-frontend" tabindex="-1">
+            <h2>Healthcare Staff Web Frontend</h2>
+            <p>Internal frontend that accesses application data and is used by healthcare staff over HTTPS.</p>
+            <p><strong>Trust level:</strong> Healthcare staff network</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="staff-doctor" tabindex="-1">
+            <h2>Doctor (staff)</h2>
+            <p>Hospital doctor using internal services to access authorised patient and clinical information.</p>
+            <p><strong>Trust level:</strong> Healthcare staff</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
+        <section class="panel dfd-detail" id="management" tabindex="-1">
+            <h2>Management Staff</h2>
+            <p>Hospital management user accessing authorised operational information through staff services.</p>
+            <p><strong>Trust level:</strong> Healthcare staff</p>
+            <a href="#diagram" class="back">↑ Back to diagram</a>
+        </section>
     </div>
 </div>
 
