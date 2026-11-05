@@ -28,7 +28,7 @@ ATTACKS = {
     "sql_injection": {
         "name": "SQL Injection",
         "stride": "Tampering",
-        "targets": ["backend", "bookings", "clinical"],
+        "targets": ["backend", "bookings"],
     },
     "xss": {
         "name": "Cross-Site Scripting (XSS)",
@@ -53,7 +53,7 @@ ATTACKS = {
     "data_exfiltration": {
         "name": "Data Exfiltration",
         "stride": "Information Disclosure",
-        "targets": ["bookings", "clinical", "ai-database"],
+        "targets": ["bookings"],
     },
     "privilege_escalation": {
         "name": "Privilege Escalation",
@@ -63,12 +63,12 @@ ATTACKS = {
     "model_poisoning": {
         "name": "Model Poisoning",
         "stride": "Tampering",
-        "targets": ["analysis", "ai-database"],
+        "targets": ["analysis"],
     },
     "log_tampering": {
         "name": "Log Tampering",
         "stride": "Repudiation",
-        "targets": ["backend", "clinical"],
+        "targets": ["backend"],
     },
 }
 
@@ -88,9 +88,7 @@ MITIGATIONS = {
         "name": "Input Validation / Parameterized Queries",
         "cost": 4,
         "blocks": ["sql_injection", "xss", "prompt_injection"],
-        "targets": [
-            "backend", "bookings", "web", "chatbot",
-        ],
+        "targets": ["backend", "bookings", "web", "chatbot"],
     },
     "rate_limiting": {
         "name": "Rate Limiting / WAF",
