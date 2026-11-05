@@ -14,108 +14,144 @@
         href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body class="side-{{ result.winner }}">
+<body class="side-{{ result.winner }}" data-winner="{{ result.winner }}">
+<script>
+    // Hide the winner until the attacks have been revealed one by one.
+    // Without JavaScript, or with reduced motion, everything shows at once.
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.body.className = "side-neutral revealing";
+    }
+</script>
+
 <div class="container">
-    {% if result.winner == "blue" %}
-    <div class="winner blue">
-        <h1>Blue team wins</h1>
-        <p class="story-line">
-            The attacks were stopped. The patient records at {{ hospital }} are safe.
-        </p>
+    {% set step = 4 %}
+    {% include "_steps.html" %}
+
+    <!-- The attack, told one step at a time -->
+    <div class="attack-intro">
+        <h1>The attack</h1>
         <p>
-            {{ result.blocked }} of {{ result.attacks|length }}
-            attacks were blocked.
+            {{ attacker_group }} launches {{ result.attacks|length }} attacks
+            against {{ hospital }}. Did the IT team protect the right places?
         </p>
-    </div>
-    {% else %}
-    <div class="winner red">
-        <h1>Red team wins</h1>
-        <p class="story-line">
-            {{ attacker_group }} got in. The patient records from {{ hospital }} are now for sale on the dark web.
-        </p>
-        <p>
-            {{ result.succeeded }} of {{ result.attacks|length }}
-            attacks succeeded.
-        </p>
-    </div>
-    {% endif %}
-    <div class="panel">
-        <h2>Red team's attacks</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Attack</th>
-                    <th>Target</th>
-                    <th>Result</th>
-                    <th>Stopped by</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for attack in result.attacks %}
-                <tr>
-                    <td>{{ attack.name }}</td>
-                    <td>{{ attack.target }}</td>
-                    <td>
-                        {% if attack.blocked %}
-                        <span class="ok">Blocked</span>
-                        {% else %}
-                        <span class="fail">Succeeded</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if attack.blocked_by %}
-                        {{ attack.blocked_by|join(", ") }}
-                        {% else %}
-                        <span class="muted">-</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <button type="button" class="skip-button" id="skip-reveal">Skip to the result</button>
     </div>
 
-    <div class="panel">
-        <h2>Blue team's mitigations</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Mitigation</th>
-                    <th>Node</th>
-                    <th>Cost</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for mitigation in result.mitigations %}
-                <tr>
-                    <td>{{ mitigation.name }}</td>
-                    <td>{{ mitigation.node }}</td>
-                    <td>{{ mitigation.cost }}</td>
-                    <td>
-                        {% if mitigation.stopped %}
-                        <span class="ok">
-                            Stopped {{ mitigation.stopped|join(", ") }}
-                        </span>
-                        {% else %}
-                        <span class="fail">No effect</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <ol class="attack-list">
+        {% for attack in result.attacks %}
+        <li class="attack-card {{ 'blocked' if attack.blocked else 'hit' }}">
+            <p class="attack-step">Attack {{ loop.index }} of {{ result.attacks|length }}</p>
+            <p class="attack-name">
+                {{ attack.name }}
+                <span class="muted">against</span>
+                {{ attack.target }}
+            </p>
+            <p class="attack-pending">Checking the defences&hellip;</p>
+            <p class="attack-outcome">
+                {% if attack.blocked %}
+                <span class="ok">Blocked</span> by {{ attack.blocked_by|join(", ") }}.
+                {% else %}
+                <span class="fail">Succeeded.</span> Nothing stopped it.
+                {% endif %}
+            </p>
+        </li>
+        {% endfor %}
+    </ol>
 
-        <p class="muted">
-            Budget used:
-            {{ result.mitigations|sum(attribute="cost") }} / {{ budget }}
-        </p>
+    <div class="final">
+        {% if result.winner == "blue" %}
+        <div class="winner blue">
+            <h1>Blue team wins</h1>
+            <p class="story-line">
+                The attacks were stopped. The patient records at {{ hospital }} are safe.
+            </p>
+            <p>
+                {{ result.blocked }} of {{ result.attacks|length }}
+                attacks were blocked.
+            </p>
+        </div>
+        {% else %}
+        <div class="winner red">
+            <h1>Red team wins</h1>
+            <p class="story-line">
+                {{ attacker_group }} got in. The patient records from {{ hospital }} are now for sale on the dark web.
+            </p>
+            <p>
+                {{ result.succeeded }} of {{ result.attacks|length }}
+                attacks succeeded.
+            </p>
+        </div>
+        {% endif %}
+
+        <div class="panel">
+            <h2>Blue team's mitigations</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mitigation</th>
+                        <th>Node</th>
+                        <th>Cost</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mitigation in result.mitigations %}
+                    <tr>
+                        <td>{{ mitigation.name }}</td>
+                        <td>{{ mitigation.node }}</td>
+                        <td>{{ mitigation.cost }}</td>
+                        <td>
+                            {% if mitigation.stopped %}
+                            <span class="ok">
+                                Stopped {{ mitigation.stopped|join(", ") }}
+                            </span>
+                            {% else %}
+                            <span class="fail">No effect</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <p class="muted">
+                Budget used:
+                {{ result.mitigations|sum(attribute="cost") }} / {{ budget }}
+            </p>
+        </div>
+
+        <a href="{{ url_for('reset') }}" class="play_again_button">
+            Play again
+        </a>
     </div>
 
-    <a href="{{ url_for('reset') }}" class="play_again_button">
-        Play again
-    </a>
 </div>
+
+<script>
+    // Reveal each attack: show it, wait, then show if it was blocked.
+    if (document.body.classList.contains("revealing")) {
+        const cards = document.querySelectorAll(".attack-card");
+        const winner = document.body.dataset.winner;
+        const timers = [];
+        const SHOW_DELAY = 600;
+        const CHECK_TIME = 1400;
+
+        const finish = () => {
+            timers.forEach(clearTimeout);
+            cards.forEach((card) => card.classList.add("shown", "resolved"));
+            document.body.className = "side-" + winner + " revealed";
+        };
+
+        cards.forEach((card, i) => {
+            const start = i * (SHOW_DELAY + CHECK_TIME);
+            timers.push(setTimeout(() => card.classList.add("shown"), start + SHOW_DELAY));
+            timers.push(setTimeout(() => card.classList.add("resolved"), start + SHOW_DELAY + CHECK_TIME));
+        });
+        timers.push(setTimeout(finish, cards.length * (SHOW_DELAY + CHECK_TIME) + 1000));
+
+        document.querySelector("#skip-reveal").addEventListener("click", finish);
+    }
+</script>
 </body>
 
 </html>

@@ -617,11 +617,183 @@ button:disabled:hover {
     color: var(--blue);
 }
 
+/* STEP INDICATOR: where the players are in the game */
+
+.steps {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    font-size: 14px;
+}
+
+.steps li {
+    flex: 1;
+    padding: 8px 10px 6px;
+    color: var(--muted);
+    border-top: 4px solid var(--rule);
+    counter-increment: step;
+}
+
+.steps li::before {
+    content: counter(step) " ";
+    font-weight: bold;
+}
+
+.steps li.done {
+    border-top-color: var(--muted);
+}
+
+.steps li.current {
+    color: var(--ink);
+    font-weight: bold;
+    border-top-color: var(--blue);
+}
+
+body.side-red .steps li.current {
+    border-top-color: var(--red);
+}
+
+/* RESULT: the attack, revealed one attack at a time */
+
+.attack-intro {
+    margin-bottom: 18px;
+}
+
+.attack-intro p {
+    font-size: 19px;
+    color: var(--muted);
+}
+
+.attack-list {
+    margin: 0 0 26px;
+    padding: 0;
+    list-style: none;
+}
+
+.attack-card {
+    margin-bottom: 12px;
+    padding: 16px 20px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 8px solid var(--rule);
+    border-radius: 6px;
+    transition: opacity 400ms ease, transform 400ms ease, border-color 300ms ease;
+}
+
+.attack-card p {
+    margin: 0;
+}
+
+.attack-step {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.attack-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.attack-outcome {
+    margin-top: 6px !important;
+    font-size: 18px;
+}
+
+.attack-pending {
+    display: none;
+    margin-top: 6px !important;
+    color: var(--muted);
+    font-style: italic;
+}
+
+.attack-card.blocked {
+    border-left-color: var(--ok);
+}
+
+.attack-card.hit {
+    border-left-color: var(--fail);
+}
+
+.skip-button {
+    display: none;
+}
+
+/* While revealing (only with JavaScript and normal motion) */
+
+body.revealing .attack-card {
+    opacity: 0;
+    transform: translateY(10px);
+    border-left-color: var(--rule);
+}
+
+body.revealing .attack-card.shown {
+    opacity: 1;
+    transform: none;
+}
+
+body.revealing .attack-outcome {
+    display: none;
+}
+
+body.revealing .attack-card.shown .attack-pending {
+    display: block;
+}
+
+body.revealing .attack-card.resolved .attack-pending {
+    display: none;
+}
+
+body.revealing .attack-card.resolved .attack-outcome {
+    display: block;
+}
+
+body.revealing .attack-card.resolved.blocked {
+    border-left-color: var(--ok);
+}
+
+body.revealing .attack-card.resolved.hit {
+    border-left-color: var(--fail);
+}
+
+body.revealing .final {
+    display: none;
+}
+
+body.revealing .skip-button {
+    display: inline-block;
+    margin-top: 0;
+    font-size: 15px;
+    padding: 8px 16px;
+}
+
+body.revealed .final {
+    animation: final-in 500ms ease;
+}
+
+@keyframes final-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 /* MOTION AND SMALL SCREENS */
 
 @media (prefers-reduced-motion: reduce) {
-    .budget-fill {
+    .budget-fill,
+    .attack-card {
         transition: none;
+    }
+
+    body.revealed .final {
+        animation: none;
     }
 }
 
@@ -645,6 +817,21 @@ button:disabled:hover {
     .roles,
     .pick-row {
         flex-direction: column;
+    }
+
+    .steps {
+        font-size: 12px;
+        gap: 4px;
+    }
+
+    .steps li {
+        padding: 6px 4px 4px;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+        font-size: 14px;
     }
 
     /* Keep each target + attack pair visibly together */

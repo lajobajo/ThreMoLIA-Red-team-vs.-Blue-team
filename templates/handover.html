@@ -10,6 +10,8 @@
 
 <body class="side-{{ next_team }}">
 <div class="container">
+    {% set step = 2 if next_team == "red" else 3 %}
+    {% include "_steps.html" %}
     <div class="handover {{ next_team }}">
         <h1>Pass the device</h1>
         {% if next_team == "red" %}

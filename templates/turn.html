@@ -17,6 +17,8 @@
 
 <body class="side-{{ team }}">
 <div class="container">
+    {% set step = 1 if team == "blue" else 2 %}
+    {% include "_steps.html" %}
     <div class="round">
         Round {{ round_number }}
     </div>
@@ -37,22 +39,28 @@
               You don't know who they are yet, but they will look for a way in.
           </p>
           <p>
-              Open the DFD to see how data moves through the hospital.
-              The dashed lines are trust boundaries, where data passes into a more trusted area.
-              Attacks usually start there.
-          </p>
-          <p>
-              Think like an attacker: where would you break in, and what would you go after first?
-              Start with the parts that face the internet, then ask which loss would be worst.
-          </p>
-          <p>
-              For each threat, write what could happen, which part of the system it targets,
-              and its STRIDE category.
+              For each threat you find, write what could happen,
+              which part of the system it targets, and its STRIDE category.
           </p>
       </div>
 
-      <!-- Help for new players (US6) -->
+      <!-- Help for new players -->
       <div class="help">
+
+          <details class="help-box">
+              <summary>Where do I start?</summary>
+              <p>
+                  Open the DFD to see how data moves through the hospital.
+                  The dashed lines are trust boundaries, where data passes into a more trusted area.
+                  Attacks usually start there.
+              </p>
+              <p>
+                  Think like an attacker: where would you break in, and what would you go after first?
+                  Start with the parts that face the internet, then ask which loss would be worst.
+              </p>
+          </details>
+
+
 
           <details class="help-box">
               <summary>What is a threat? (and how is it different from a vulnerability)</summary>

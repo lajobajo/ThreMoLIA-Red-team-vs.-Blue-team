@@ -1,0 +1,9 @@
+{# Shows where the players are in the game. Set "step" (1-4) before including. #}
+<ol class="steps" aria-label="Game steps">
+    {% for name in ["Blue finds threats", "Red attacks", "Blue protects", "Result"] %}
+    <li class="{% if loop.index < step %}done{% elif loop.index == step %}current{% endif %}"
+        {% if loop.index == step %}aria-current="step"{% endif %}>
+        {{ name }}
+    </li>
+    {% endfor %}
+</ol>
