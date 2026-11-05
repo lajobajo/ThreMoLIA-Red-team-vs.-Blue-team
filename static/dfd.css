@@ -566,6 +566,11 @@ body.side-red .legend-process {
     background: #3b2529;
 }
 
+body.side-red .legend-entity {
+    border-color: #c45850;
+    background: #3b2529;
+}
+
 body.side-red .legend-store {
     border-color: #cf796e;
     background: #34282a;
